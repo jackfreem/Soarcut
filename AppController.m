@@ -319,9 +319,14 @@ static void pollPasteboardTimerFired(void *context)
                                                             forKey:@"loadOnStartup"];
 #else
 
-        // This can take five seconds, perhaps more, so do it in the background instead of holding up opening of the preference panel.
-        int checkLoginRegistry = [UKLoginItemRegistry indexForLoginItemWithPath:[[NSBundle mainBundle] bundlePath]];
-        if ( checkLoginRegistry >= 1 ) {
+        BOOL isLoginItem;
+        if (@available(macOS 13.0, *)) {
+            isLoginItem = ( SMAppServiceStatusEnabled == [[SMAppService mainAppService] status] );
+        } else {
+            // This can take five seconds, perhaps more, so do it in the background instead of holding up opening of the preference panel.
+            isLoginItem = ( [UKLoginItemRegistry indexForLoginItemWithPath:[[NSBundle mainBundle] bundlePath]] >= 1 );
+        }
+        if ( isLoginItem ) {
             [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES]
                                                      forKey:@"loadOnStartup"];
         } else {
@@ -836,14 +841,26 @@ static void pollPasteboardTimerFired(void *context)
 #ifdef SANDBOXING
         SMLoginItemSetEnabled((__bridge CFStringRef)kFlycutHelperId, YES);
 #else
-    [UKLoginItemRegistry addLoginItemWithPath:[[NSBundle mainBundle] bundlePath] hideIt:NO];
+    if (@available(macOS 13.0, *)) {
+        NSError *error = nil;
+        if ( ![[SMAppService mainAppService] registerAndReturnError:&error] )
+            NSLog(@"Could not add login item: %@", error);
+    } else {
+        [UKLoginItemRegistry addLoginItemWithPath:[[NSBundle mainBundle] bundlePath] hideIt:NO];
+    }
 #endif
 	} else {
         // FIXME: Should ask Gennadii if the "#ifdef SANDBOXING" should be removed and replaced with "if ([AppController isAppSandboxed])"
 #ifdef SANDBOXING
         SMLoginItemSetEnabled((__bridge CFStringRef)kFlycutHelperId, NO);
 #else
-		[UKLoginItemRegistry removeLoginItemWithPath:[[NSBundle mainBundle] bundlePath]];
+		if (@available(macOS 13.0, *)) {
+			NSError *error = nil;
+			if ( ![[SMAppService mainAppService] unregisterAndReturnError:&error] )
+				NSLog(@"Could not remove login item: %@", error);
+		} else {
+			[UKLoginItemRegistry removeLoginItemWithPath:[[NSBundle mainBundle] bundlePath]];
+		}
 #endif
 	}
 }
