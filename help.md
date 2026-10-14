@@ -1,4 +1,4 @@
-### Flycut Help
+### Soarcut Help
 <a href="http://itunes.apple.com/us/app/flycut-clipboard-manager/id442160987?mt=12"><img src="http://a3.mzstatic.com/us/r1000/047/Purple/fb/53/f2/mzi.mcaxwyjm.175x175-75.png" /></a><br />
 **Basics**
 
@@ -6,7 +6,7 @@ Copy the same way as always.
 
 Paste the same way as always.
 
-Press the Main Hotkey (Shift-Command-v, by default) to access your clipboard history.  Or just use the Flycut menu (that little red locker, like the one you see above.
+Press the Main Hotkey (Shift-Command-v, by default) to access your clipboard history.  Or just use the Soarcut menu (the bird-and-scissors icon in the menu bar).
 
 **The Bezel**
 
@@ -24,13 +24,13 @@ Here's a complete list of keys you can use in the Bezel.
 
 **Return**: Paste the clipboard history item currently displayed, closing the Bezel.
 
-**t** or **T**: Type the clipboard history item currently displayed as individual keystrokes, closing the Bezel. This is useful for VM consoles and other fields that block clipboard paste. Flycut must have Accessibility permission. Keep the destination focused until typing finishes.
+**t** or **T**: Type the clipboard history item currently displayed as individual keystrokes, closing the Bezel. This is useful for VM consoles and other fields that block clipboard paste. Soarcut must have Accessibility permission. Keep the destination focused until typing finishes.
 
 **Esc**: Close the bezel without pasting, preserving bezel position in the history.
 
 **Enter** (Fn-Return): Move the clipboard history item currently displayed to the front of the history, closing the Bezel.
 
-**Command-,**: Display the Flycut preferences panel.
+**Command-,**: Display the Soarcut preferences panel.
 
 **Home**: Move to the most recent item in your clipboard history.
 
@@ -52,7 +52,7 @@ Here's a complete list of keys you can use in the Bezel.
 
 **Menu Features**
 
-The Flycut menu allows you to select from the most recent items in the main clipboard history store, clear all of them, merge them all into one entry, or access the preferences panel. Hold Option while the menu is open to replace each clipping with a "Type as Keystrokes" action. You can also Option-Click the Flycut menu icon to disable or reenable clipboard tracking, in case you are copying sensitive information such as passwords.
+The Soarcut menu allows you to select from the most recent items in the main clipboard history store, clear all of them, merge them all into one entry, or access the preferences panel. Hold Option while the menu is open to replace each clipping with a "Type as Keystrokes" action. You can also Option-Click the Soarcut menu icon to disable or reenable clipboard tracking, in case you are copying sensitive information such as passwords.
 
 **Preferences Panel**
 

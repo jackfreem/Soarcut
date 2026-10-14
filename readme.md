@@ -1,42 +1,33 @@
-# Flycut
-<a href="https://github.com/TermiT/Flycut/releases"><img src="http://a3.mzstatic.com/us/r1000/047/Purple/fb/53/f2/mzi.mcaxwyjm.175x175-75.png" /></a>
-<a href="https://macdownload.informer.com/flycut/"><img src="award-2021.png" /></a>
-<a href="https://macdownload.informer.com/flycut/"><img src="award-2022.png" /></a>
-<br />
-**Description:**
-Flycut is a clean and simple clipboard manager for developers. It's based on an open source app called Jumpcut.
+# Soarcut
 
-On the Mac, every time you copy a code piece, Flycut stores it in history. Later, you can paste it using Shift-Command-V even if you have something different in your current clipboard. You can change the hotkey and other settings in preferences.
+<img src="Design/Soarcut-1024.png" width="128" alt="Soarcut icon" />
 
-On iOS, every time you open Flycut, it checks for a new clipping and stores it in history. Later, you can tap any item in the history list to place it on the clipboard. You can also swipe web links in the history to open them without placing them on the clipboard.
+Soarcut is a clean, simple clipboard manager for macOS developers. Every time you copy something, Soarcut keeps it in history. Press **Shift-Command-V** to bring up the bezel, keep holding the modifiers, tap **V** (or the arrow keys) to pick an older clipping, and release to paste it.
 
-Developed by developers for developers.
+Soarcut continues a long lineage: [Jumpcut](http://jumpcut.sourceforge.net) by Steve Cook (2002) → [Flycut](https://github.com/TermiT/Flycut) by General Arcade (2011) → Soarcut (2026). Jump, fly, soar.
 
-**Donation:**
-If you like Flycut, you can donate [here](https://paypal.me/flycut)
+## What's different from Flycut
+
+- **Bezel no longer gets stuck** when a system prompt or another window takes focus ([TermiT/Flycut#201](https://github.com/TermiT/Flycut/issues/201)).
+- **Pop Paste hotkey** (optional): paste, then step to the next older clipping on each press.
+- **Type as keystrokes**: press **T** in the bezel, or hold Option in the menu, for fields that block paste (VM consoles, remote desktops).
+- **Lower idle CPU** and fewer redraws.
+- A clear alert when paste fails because Accessibility access is missing.
+- Launch at login uses the modern macOS API.
+- macOS only, distributed outside the App Store: no iOS app, no iCloud sync, no sandbox.
 
 ## Install
 
-***For OSX 10.13 and older use DRM-Free version***
-
-***For OSX 10.14 and later use either App Store or DRM-Free versions. But don't forget to give Flycut access in System Preferences -> Security & Privacy -> Privacy -> Accessibility. If you had previous version of Flycut installed, you might need to remove it from Accessibility first and add it again.***
-
-**Mac App Store:**
-Download from the App Store [here](http://itunes.apple.com/us/app/flycut-clipboard-manager/id442160987?mt=12)
-
-**DRM-Free:**
-Download latest DRM-Free version [here](https://github.com/TermiT/Flycut/releases)
-
-**iOS App Store:**
-Download from the App Store [here](https://itunes.apple.com/us/app/flycut/id1273639655?mt=8)
+Download the latest release from [Releases](https://github.com/jackfreem/Soarcut/releases), move **Soarcut.app** to Applications, and allow it in **System Settings → Privacy & Security → Accessibility** so it can paste for you.
 
 ## Use
-**Documentation:**
-[Mac Help File](help.md) / [iOS Help File](help.iOS.md)
 
-## Develop
-**Contributors:**
-Check the list of contributors [here](https://github.com/TermiT/Flycut/graphs/contributors)
+See the [help file](help.md) for all bezel keys and menu features.
 
-**License:**
-MIT
+## Build
+
+Open `Flycut.xcodeproj` in Xcode 26.3 or later and build the **Flycut** scheme. The product is `Soarcut.app`. (Internal names still say Flycut, which keeps merging upstream fixes easy.)
+
+## Credits and license
+
+MIT. Soarcut builds on the work of Flycut's contributors and on Jumpcut. See [acknowledgements.txt](acknowledgements.txt) for the libraries used and their authors.

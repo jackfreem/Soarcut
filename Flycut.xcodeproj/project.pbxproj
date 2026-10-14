@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		19FC85C96EBD57ECC3938992 /* soarcut.png in Resources */ = {isa = PBXBuildFile; fileRef = F288EA293B7AAFCB4B4CF4C6 /* soarcut.png */; };
+		1FF21550E49AC394CCA1CAB3 /* soarcut@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F2BD3E0EDD832BB4E319536 /* soarcut@2x.png */; };
+		5AC39821BEACBAC908ED71A7 /* soarcut-xout@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 367492A25C99DA4B0EDB5D3F /* soarcut-xout@2x.png */; };
 		77192A3823D6EADF00EDB9BC /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77192A3723D6EADF00EDB9BC /* ServiceManagement.framework */; };
 		773ABFB113E9AA1A00AE3969 /* NSWindow+TrueCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 773ABFAF13E9AA1A00AE3969 /* NSWindow+TrueCenter.h */; };
 		773ABFB213E9AA1A00AE3969 /* NSWindow+TrueCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 773ABFB013E9AA1A00AE3969 /* NSWindow+TrueCenter.m */; };
@@ -32,9 +35,7 @@
 		7761C8B1139BDF12000FB3AB /* SRRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C8A5139BDF12000FB3AB /* SRRecorderControl.m */; };
 		7761C8B2139BDF12000FB3AB /* SRValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C8A6139BDF12000FB3AB /* SRValidator.h */; };
 		7761C8B3139BDF12000FB3AB /* SRValidator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C8A7139BDF12000FB3AB /* SRValidator.m */; };
-		7761C8DB139BE06B000FB3AB /* com.generalarcade.flycut.16.png in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8CD139BE06B000FB3AB /* com.generalarcade.flycut.16.png */; };
 		7761C8DC139BE06B000FB3AB /* com.generalarcade.flycut.32.png in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8CE139BE06B000FB3AB /* com.generalarcade.flycut.32.png */; };
-		7761C8DF139BE06B000FB3AB /* jumpcut.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8D1139BE06B000FB3AB /* jumpcut.icns */; };
 		7761C8E0139BE06B000FB3AB /* net.sf.jumpcut.ghost_scissors_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8D2139BE06B000FB3AB /* net.sf.jumpcut.ghost_scissors_small.png */; };
 		7761C8E1139BE06B000FB3AB /* net.sf.jumpcut.preferences.acknowledgements.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8D3139BE06B000FB3AB /* net.sf.jumpcut.preferences.acknowledgements.tiff */; };
 		7761C8E2139BE06B000FB3AB /* net.sf.jumpcut.preferences.appearance.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8D4139BE06B000FB3AB /* net.sf.jumpcut.preferences.appearance.tiff */; };
@@ -44,7 +45,6 @@
 		7761C8E6139BE06B000FB3AB /* RemoveShortcut.tif in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8D8139BE06B000FB3AB /* RemoveShortcut.tif */; };
 		7761C8E7139BE06B000FB3AB /* RemoveShortcutPressed.tif in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8D9139BE06B000FB3AB /* RemoveShortcutPressed.tif */; };
 		7761C8E8139BE06B000FB3AB /* RemoveShortcutRollover.tif in Resources */ = {isa = PBXBuildFile; fileRef = 7761C8DA139BE06B000FB3AB /* RemoveShortcutRollover.tif */; };
-		7794D3D5139BF28B0047E862 /* flycut.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7794D3D4139BF28B0047E862 /* flycut.icns */; };
 		77A4F3AD139BD72300F39666 /* SGHotKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A4F3A5139BD72300F39666 /* SGHotKey.h */; };
 		77A4F3AE139BD72300F39666 /* SGHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 77A4F3A6139BD72300F39666 /* SGHotKey.m */; };
 		77A4F3AF139BD72300F39666 /* SGHotKeyCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 77A4F3A7139BD72300F39666 /* SGHotKeyCenter.h */; };
@@ -58,22 +58,23 @@
 		77DA6B931CB9549B0077917F /* FlycutStore.h in Headers */ = {isa = PBXBuildFile; fileRef = 77DA6B8F1CB9549B0077917F /* FlycutStore.h */; };
 		77DA6B941CB9549B0077917F /* FlycutClipping.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DA6B901CB9549B0077917F /* FlycutClipping.m */; };
 		77DA6B951CB9549B0077917F /* FlycutClipping.h in Headers */ = {isa = PBXBuildFile; fileRef = 77DA6B911CB9549B0077917F /* FlycutClipping.h */; };
+		83770D673FA0898C1FBCF473 /* soarcut-black.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9BBF55DAEFF5A02C12440A /* soarcut-black.png */; };
+		85BF82BC6B60E02319B6903F /* soarcut-black@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44A70E2EB212FA710AAC9ABA /* soarcut-black@2x.png */; };
 		8D0C119F1F147E250046FAA0 /* FlycutOperator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0C119E1F147E250046FAA0 /* FlycutOperator.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		8D151CC21FAC2B38005132F0 /* acknowledgements.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8D151CC11FAC2B38005132F0 /* acknowledgements.txt */; };
-		8D2E28861B0669F500AE62C8 /* com.generalarcade.flycut.black.16.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D2E28821B0669F500AE62C8 /* com.generalarcade.flycut.black.16.png */; };
-		8D2E28871B0669F500AE62C8 /* com.generalarcade.flycut.black.32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D2E28831B0669F500AE62C8 /* com.generalarcade.flycut.black.32.png */; };
-		8D2E28881B0669F500AE62C8 /* com.generalarcade.flycut.xout.16.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D2E28841B0669F500AE62C8 /* com.generalarcade.flycut.xout.16.png */; };
-		8D2E28891B0669F500AE62C8 /* com.generalarcade.flycut.xout.32.png in Resources */ = {isa = PBXBuildFile; fileRef = 8D2E28851B0669F500AE62C8 /* com.generalarcade.flycut.xout.32.png */; };
 		AABE497C09FF9CD000A6A239 /* AppController.m in Sources */ = {isa = PBXBuildFile; fileRef = AABE497B09FF9CD000A6A239 /* AppController.m */; };
 		AAFAC85F0A1BD9DD00DC6025 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AAFAC84A0A1BD9DD00DC6025 /* Carbon.framework */; };
+		BE3FBDA7473281DF0B17831F /* Soarcut.icns in Resources */ = {isa = PBXBuildFile; fileRef = DA9D67F388BAACECBB7B67AF /* Soarcut.icns */; };
 		DBEB0C9C1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = DBEB0C9A1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h */; };
 		DBEB0C9D1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEB0C9B1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m */; };
+		EC2174567D83879DA014490E /* soarcut-xout.png in Resources */ = {isa = PBXBuildFile; fileRef = 358AFD37E01422982734E5BB /* soarcut-xout.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F9BBF55DAEFF5A02C12440A /* soarcut-black.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut-black.png"; path = "Resources/soarcut-black.png"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -81,6 +82,9 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* Flycut_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flycut_Prefix.pch; sourceTree = "<group>"; };
+		358AFD37E01422982734E5BB /* soarcut-xout.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut-xout.png"; path = "Resources/soarcut-xout.png"; sourceTree = "<group>"; };
+		367492A25C99DA4B0EDB5D3F /* soarcut-xout@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut-xout@2x.png"; path = "Resources/soarcut-xout@2x.png"; sourceTree = "<group>"; };
+		44A70E2EB212FA710AAC9ABA /* soarcut-black@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut-black@2x.png"; path = "Resources/soarcut-black@2x.png"; sourceTree = "<group>"; };
 		77192A1E23D4376200EDB9BC /* FlycutDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlycutDebug.entitlements; sourceTree = "<group>"; };
 		77192A3723D6EADF00EDB9BC /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		773ABFAF13E9AA1A00AE3969 /* NSWindow+TrueCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+TrueCenter.h"; sourceTree = "<group>"; };
@@ -107,9 +111,7 @@
 		7761C8A5139BDF12000FB3AB /* SRRecorderControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRRecorderControl.m; sourceTree = "<group>"; };
 		7761C8A6139BDF12000FB3AB /* SRValidator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRValidator.h; sourceTree = "<group>"; };
 		7761C8A7139BDF12000FB3AB /* SRValidator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRValidator.m; sourceTree = "<group>"; };
-		7761C8CD139BE06B000FB3AB /* com.generalarcade.flycut.16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = com.generalarcade.flycut.16.png; path = Resources/com.generalarcade.flycut.16.png; sourceTree = "<group>"; };
 		7761C8CE139BE06B000FB3AB /* com.generalarcade.flycut.32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = com.generalarcade.flycut.32.png; path = Resources/com.generalarcade.flycut.32.png; sourceTree = "<group>"; };
-		7761C8D1139BE06B000FB3AB /* jumpcut.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = jumpcut.icns; path = Resources/jumpcut.icns; sourceTree = "<group>"; };
 		7761C8D2139BE06B000FB3AB /* net.sf.jumpcut.ghost_scissors_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = net.sf.jumpcut.ghost_scissors_small.png; path = Resources/net.sf.jumpcut.ghost_scissors_small.png; sourceTree = "<group>"; };
 		7761C8D3139BE06B000FB3AB /* net.sf.jumpcut.preferences.acknowledgements.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = net.sf.jumpcut.preferences.acknowledgements.tiff; path = Resources/net.sf.jumpcut.preferences.acknowledgements.tiff; sourceTree = "<group>"; };
 		7761C8D4139BE06B000FB3AB /* net.sf.jumpcut.preferences.appearance.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = net.sf.jumpcut.preferences.appearance.tiff; path = Resources/net.sf.jumpcut.preferences.appearance.tiff; sourceTree = "<group>"; };
@@ -120,8 +122,6 @@
 		7761C8D9139BE06B000FB3AB /* RemoveShortcutPressed.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = RemoveShortcutPressed.tif; path = Resources/RemoveShortcutPressed.tif; sourceTree = "<group>"; };
 		7761C8DA139BE06B000FB3AB /* RemoveShortcutRollover.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = RemoveShortcutRollover.tif; path = Resources/RemoveShortcutRollover.tif; sourceTree = "<group>"; };
 		7761C8EB139BE09D000FB3AB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7794D3D4139BF28B0047E862 /* flycut.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = flycut.icns; sourceTree = "<group>"; };
-		7794D3D6139BF2B10047E862 /* flycut.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = flycut.icns; sourceTree = "<group>"; };
 		77A4F3A5139BD72300F39666 /* SGHotKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGHotKey.h; sourceTree = "<group>"; };
 		77A4F3A6139BD72300F39666 /* SGHotKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGHotKey.m; sourceTree = "<group>"; };
 		77A4F3A7139BD72300F39666 /* SGHotKeyCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGHotKeyCenter.h; sourceTree = "<group>"; };
@@ -139,19 +139,18 @@
 		8D0C11A01F147E3C0046FAA0 /* FlycutOperator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlycutOperator.h; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* Flycut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flycut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D151CC11FAC2B38005132F0 /* acknowledgements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = acknowledgements.txt; sourceTree = "<group>"; };
-		8D2E28821B0669F500AE62C8 /* com.generalarcade.flycut.black.16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = com.generalarcade.flycut.black.16.png; path = Resources/com.generalarcade.flycut.black.16.png; sourceTree = "<group>"; };
-		8D2E28831B0669F500AE62C8 /* com.generalarcade.flycut.black.32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = com.generalarcade.flycut.black.32.png; path = Resources/com.generalarcade.flycut.black.32.png; sourceTree = "<group>"; };
-		8D2E28841B0669F500AE62C8 /* com.generalarcade.flycut.xout.16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = com.generalarcade.flycut.xout.16.png; path = Resources/com.generalarcade.flycut.xout.16.png; sourceTree = "<group>"; };
-		8D2E28851B0669F500AE62C8 /* com.generalarcade.flycut.xout.32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = com.generalarcade.flycut.xout.32.png; path = Resources/com.generalarcade.flycut.xout.32.png; sourceTree = "<group>"; };
 		8D61FD581F7961D200BD4B3D /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/System/Library/Frameworks/UserNotifications.framework; sourceTree = DEVELOPER_DIR; };
 		8D84B6361F72FBA900DB58F9 /* Flycut.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flycut.entitlements; sourceTree = "<group>"; };
 		8D84B63A1F7412E600DB58F9 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		8DC9C99B1F742115003BE8B5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		9F2BD3E0EDD832BB4E319536 /* soarcut@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut@2x.png"; path = "Resources/soarcut@2x.png"; sourceTree = "<group>"; };
 		AABE497A09FF9CD000A6A239 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		AABE497B09FF9CD000A6A239 /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		AAFAC84A0A1BD9DD00DC6025 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
+		DA9D67F388BAACECBB7B67AF /* Soarcut.icns */ = {isa = PBXFileReference; includeInIndex = 1; name = Soarcut.icns; path = Resources/Soarcut.icns; sourceTree = "<group>"; };
 		DBEB0C9A1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+ULIZoomEffect.h"; sourceTree = "<group>"; };
 		DBEB0C9B1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+ULIZoomEffect.m"; sourceTree = "<group>"; };
+		F288EA293B7AAFCB4B4CF4C6 /* soarcut.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = soarcut.png; path = Resources/soarcut.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,7 +216,6 @@
 			children = (
 				77192A1E23D4376200EDB9BC /* FlycutDebug.entitlements */,
 				8D84B6361F72FBA900DB58F9 /* Flycut.entitlements */,
-				7794D3D4139BF28B0047E862 /* flycut.icns */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -239,14 +237,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7794D3D6139BF2B10047E862 /* flycut.icns */,
-				7761C8CD139BE06B000FB3AB /* com.generalarcade.flycut.16.png */,
 				7761C8CE139BE06B000FB3AB /* com.generalarcade.flycut.32.png */,
-				8D2E28821B0669F500AE62C8 /* com.generalarcade.flycut.black.16.png */,
-				8D2E28831B0669F500AE62C8 /* com.generalarcade.flycut.black.32.png */,
-				8D2E28841B0669F500AE62C8 /* com.generalarcade.flycut.xout.16.png */,
-				8D2E28851B0669F500AE62C8 /* com.generalarcade.flycut.xout.32.png */,
-				7761C8D1139BE06B000FB3AB /* jumpcut.icns */,
 				7761C8EB139BE09D000FB3AB /* Info.plist */,
 				7761C8D2139BE06B000FB3AB /* net.sf.jumpcut.ghost_scissors_small.png */,
 				7761C8D3139BE06B000FB3AB /* net.sf.jumpcut.preferences.acknowledgements.tiff */,
@@ -259,6 +250,13 @@
 				7761C8DA139BE06B000FB3AB /* RemoveShortcutRollover.tif */,
 				29B97318FDCFA39411CA2CEA /* MainMenu.nib */,
 				8D151CC11FAC2B38005132F0 /* acknowledgements.txt */,
+				F288EA293B7AAFCB4B4CF4C6 /* soarcut.png */,
+				9F2BD3E0EDD832BB4E319536 /* soarcut@2x.png */,
+				0F9BBF55DAEFF5A02C12440A /* soarcut-black.png */,
+				44A70E2EB212FA710AAC9ABA /* soarcut-black@2x.png */,
+				358AFD37E01422982734E5BB /* soarcut-xout.png */,
+				367492A25C99DA4B0EDB5D3F /* soarcut-xout@2x.png */,
+				DA9D67F388BAACECBB7B67AF /* Soarcut.icns */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -494,24 +492,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */,
-				7761C8DB139BE06B000FB3AB /* com.generalarcade.flycut.16.png in Resources */,
 				7761C8DC139BE06B000FB3AB /* com.generalarcade.flycut.32.png in Resources */,
-				7761C8DF139BE06B000FB3AB /* jumpcut.icns in Resources */,
-				8D2E28891B0669F500AE62C8 /* com.generalarcade.flycut.xout.32.png in Resources */,
 				7761C8E0139BE06B000FB3AB /* net.sf.jumpcut.ghost_scissors_small.png in Resources */,
 				7761C8E1139BE06B000FB3AB /* net.sf.jumpcut.preferences.acknowledgements.tiff in Resources */,
-				8D2E28871B0669F500AE62C8 /* com.generalarcade.flycut.black.32.png in Resources */,
 				7761C8E2139BE06B000FB3AB /* net.sf.jumpcut.preferences.appearance.tiff in Resources */,
 				7761C8E3139BE06B000FB3AB /* net.sf.jumpcut.preferences.general.tiff in Resources */,
-				8D2E28881B0669F500AE62C8 /* com.generalarcade.flycut.xout.16.png in Resources */,
 				7761C8E4139BE06B000FB3AB /* net.sf.jumpcut.preferences.hotkey.tiff in Resources */,
 				7761C8E5139BE06B000FB3AB /* net.sf.jumpcut.scissors_bw16.png in Resources */,
-				8D2E28861B0669F500AE62C8 /* com.generalarcade.flycut.black.16.png in Resources */,
 				7761C8E6139BE06B000FB3AB /* RemoveShortcut.tif in Resources */,
 				7761C8E7139BE06B000FB3AB /* RemoveShortcutPressed.tif in Resources */,
 				8D151CC21FAC2B38005132F0 /* acknowledgements.txt in Resources */,
 				7761C8E8139BE06B000FB3AB /* RemoveShortcutRollover.tif in Resources */,
-				7794D3D5139BF28B0047E862 /* flycut.icns in Resources */,
+				19FC85C96EBD57ECC3938992 /* soarcut.png in Resources */,
+				1FF21550E49AC394CCA1CAB3 /* soarcut@2x.png in Resources */,
+				83770D673FA0898C1FBCF473 /* soarcut-black.png in Resources */,
+				85BF82BC6B60E02319B6903F /* soarcut-black@2x.png in Resources */,
+				EC2174567D83879DA014490E /* soarcut-xout.png in Resources */,
+				5AC39821BEACBAC908ED71A7 /* soarcut-xout@2x.png in Resources */,
+				BE3FBDA7473281DF0B17831F /* Soarcut.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,7 +585,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S8JLSG5ES7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -607,9 +605,9 @@
 				INSTALL_PATH = /Applications;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.9.7;
-				PRODUCT_BUNDLE_IDENTIFIER = com.generalarcade.flycut;
-				PRODUCT_NAME = Flycut;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackfreem.soarcut;
+				PRODUCT_NAME = Soarcut;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -624,7 +622,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S8JLSG5ES7;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -641,9 +639,9 @@
 				INSTALL_PATH = /Applications;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 1.9.7;
-				PRODUCT_BUNDLE_IDENTIFIER = com.generalarcade.flycut;
-				PRODUCT_NAME = Flycut;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackfreem.soarcut;
+				PRODUCT_NAME = Soarcut;
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -683,7 +681,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = Flycut;
+				PRODUCT_NAME = Soarcut;
 				SDKROOT = macosx;
 			};
 			name = Debug;

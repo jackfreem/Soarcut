@@ -87,6 +87,15 @@ static void pollPasteboardTimerFired(void *context)
 
 @implementation AppController
 
+// Template images are tinted by macOS, so the monochrome menu bar icons stay visible in dark mode.
++ (NSImage *)templateImageNamed:(NSString *)name
+{
+	NSImage *image = [NSImage imageNamed:name];
+	[image setTemplate:YES];
+	return image;
+}
+
+
 /// Determines, through a hack of sorts, if the app is running sandboxed. The SANDBOXING define has no direct connection to being sandboxed, but this method identifies the state by looking for a directory which will have at least eight path components if sandboxed and is quite unlikely to have that many if not sandboxed. Of course, if this doesn't work for your unique case, just do a custom build with this method returning NO.
 + (BOOL)isAppSandboxed {
 	// Get the Desktop directory:
@@ -177,7 +186,7 @@ static void pollPasteboardTimerFired(void *context)
     BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:@"suppressAccessibilityAlert"];
     NSDictionary* options = @{(id) (kAXTrustedCheckOptionPrompt): @NO};
     if (!suppressAlert && AXIsProcessTrustedWithOptions != NULL && !AXIsProcessTrustedWithOptions((CFDictionaryRef) (options))) {
-        NSAlert *alert = [NSAlert alertWithMessageText:@"Flycut" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"For correct functioning of the app please tick Flycut in Accessibility apps list"];
+        NSAlert *alert = [NSAlert alertWithMessageText:@"Soarcut" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"For correct functioning of the app please tick Soarcut in Accessibility apps list"];
         alert.showsSuppressionButton = YES;
         [alert runModal];
         if (alert.suppressionButton.state == NSOnState) {
@@ -197,7 +206,7 @@ static void pollPasteboardTimerFired(void *context)
     if (ver.majorVersion == 10 && ver.minorVersion <= 13) {
         BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:@"suppressOldOSXAlert"];
         if (!suppressAlert) {
-            NSAlert *alert = [NSAlert alertWithMessageText:@"Flycut" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Unfortunatly due to some app sandbox security restrictions from Apple Flycut may not correctly function on MacOSX 10.13 or lower. You can download non sandboxed version here: https://github.com/TermiT/Flycut/releases"];
+            NSAlert *alert = [NSAlert alertWithMessageText:@"Soarcut" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Unfortunatly due to some app sandbox security restrictions from Apple Flycut may not correctly function on MacOSX 10.13 or lower. You can download non sandboxed version here: https://github.com/TermiT/Flycut/releases"];
             alert.showsSuppressionButton = YES;
             [alert runModal];
             if (alert.suppressionButton.state == NSOnState) {
@@ -383,9 +392,9 @@ static void pollPasteboardTimerFired(void *context)
                 break;
             }
 
-        if ( [currRunningApp rangeOfString:@"Flycut"].location == NSNotFound )
+        if ( [currRunningApp rangeOfString:@"Soarcut"].location == NSNotFound )
         {
-            // We haven't activated Flycut yet.
+            // We haven't activated Soarcut yet.
             currentRunningApplication = [currApp retain]; // Remember what app we came from.
             [menu cancelTracking]; // Prevent the menu from displaying, since activateIgnoringOtherApps would close it anyway.
             [NSApp activateIgnoringOtherApps: YES]; // Required to make the search field firstResponder any good.
@@ -427,7 +436,7 @@ static void pollPasteboardTimerFired(void *context)
         statusItemText = [statusItem title];
         statusItemImage = [statusItem image];
         [statusItem setTitle: @""];
-        [statusItem setImage: [NSImage imageNamed:@"com.generalarcade.flycut.xout.16.png"]];
+        [statusItem setImage: [AppController templateImageNamed:@"soarcut-xout"]];
         return true;
     }
     else
@@ -508,7 +517,7 @@ static void pollPasteboardTimerFired(void *context)
 {
     if (number == 1 ) {
         [statusItem setTitle:@""];
-        [statusItem setImage:[NSImage imageNamed:@"com.generalarcade.flycut.black.16.png"]];
+        [statusItem setImage:[AppController templateImageNamed:@"soarcut-black"]];
     } else if (number == 2 ) {
         [statusItem setImage:nil];
         [statusItem setTitle:[NSString stringWithFormat:@"%C",0x2704]];
@@ -517,7 +526,7 @@ static void pollPasteboardTimerFired(void *context)
         [statusItem setTitle:[NSString stringWithFormat:@"%C",0x2702]];
     } else {
         [statusItem setTitle:@""];
-        [statusItem setImage:[NSImage imageNamed:@"com.generalarcade.flycut.16.png"]];
+        [statusItem setImage:[NSImage imageNamed:@"soarcut"]];
     }
 }
 
@@ -770,8 +779,8 @@ static void pollPasteboardTimerFired(void *context)
 
 	row = [self preferencePanelPopUpRowForText:@"Menu item icon"
 										 items:[NSArray arrayWithObjects:
-												@"Flycut icon",
-												@"Black Flycut icon",
+												@"Soarcut icon",
+												@"Black Soarcut icon",
 												@"White scissors",
 												@"Black scissors",nil]
 									 frameMaxY:nextYMax
@@ -1000,7 +1009,7 @@ static void pollPasteboardTimerFired(void *context)
 			didWarnPasteNeedsAccessibility = YES;
 			NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 			alert.messageText = @"Paste needs Accessibility access";
-			alert.informativeText = @"The clipping is on the clipboard, but Flycut can't press Cmd-V for you until it is allowed in System Settings > Privacy & Security > Accessibility. If Flycut is already listed, remove it and add it again.";
+			alert.informativeText = @"The clipping is on the clipboard, but Soarcut can't press Cmd-V for you until it is allowed in System Settings > Privacy & Security > Accessibility. If Soarcut is already listed, remove it and add it again.";
 			[alert addButtonWithTitle:@"Open Settings"];
 			[alert addButtonWithTitle:@"Cancel"];
 			[NSApp activateIgnoringOtherApps:YES];
@@ -1393,7 +1402,7 @@ static void pollPasteboardTimerFired(void *context)
 	mainHotKey = [[SGHotKey alloc] initWithIdentifier:@"mainHotKey"
 											   keyCombo:[SGKeyCombo keyComboWithKeyCode:[mainRecorder keyCombo].code
 																			  modifiers:[mainRecorder cocoaToCarbonFlags: [mainRecorder keyCombo].flags]]];
-	[mainHotKey setName: @"Activate Flycut HotKey"]; //This is typically used by PTKeyComboPanel
+	[mainHotKey setName: @"Activate Soarcut HotKey"]; //This is typically used by PTKeyComboPanel
 	[mainHotKey setTarget: self];
 	[mainHotKey setAction: @selector(hitMainHotKey:)];
 	[[SGHotKeyCenter sharedCenter] registerHotKey:mainHotKey];
@@ -1435,7 +1444,7 @@ static void pollPasteboardTimerFired(void *context)
 	popPasteHotKey = [[SGHotKey alloc] initWithIdentifier:@"popPasteHotKey"
 												 keyCombo:[SGKeyCombo keyComboWithKeyCode:[popPasteRecorder keyCombo].code
 																				modifiers:[popPasteRecorder cocoaToCarbonFlags: [popPasteRecorder keyCombo].flags]]];
-	[popPasteHotKey setName: @"Flycut Pop Paste HotKey"];
+	[popPasteHotKey setName: @"Soarcut Pop Paste HotKey"];
 	[popPasteHotKey setTarget: self];
 	[popPasteHotKey setAction: @selector(hitPopPasteHotKey:)];
 	[[SGHotKeyCenter sharedCenter] registerHotKey:popPasteHotKey];

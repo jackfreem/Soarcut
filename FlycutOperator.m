@@ -408,7 +408,7 @@
 	{
 		// Check to see if they want a little help figuring out what types to enter.
 		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"revealPasteboardTypes"] )
-			[clippingStore addClipping:type ofType:type fromAppLocalizedName:@"Flycut" fromAppBundleURL:nil atTimestamp:0];
+			[clippingStore addClipping:type ofType:type fromAppLocalizedName:@"Soarcut" fromAppBundleURL:nil atTimestamp:0];
 		[self actionAfterListModification];
 
 		__block bool skipClipping = NO;

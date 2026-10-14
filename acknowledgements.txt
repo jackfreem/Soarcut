@@ -1,17 +1,15 @@
-Support: https://github.com/TermiT/Flycut/issues
+Support: https://github.com/jackfreem/Soarcut/issues
+
+Soarcut is a fork of Flycut, continuing the Jumpcut → Flycut lineage. Source code available on GitHub: https://github.com/jackfreem/Soarcut
+© Soarcut contributors, 2026.
 
 Flycut, developed by General Arcade (http://www.generalarcade.com/). Flycut is a fork of Jumpcut. Source code avilable on GitHub: http://github.com/TermiT/Flycut
 © General Arcade, 2011 - 2020.
 
-Flycut macOS incorporates the following libraries, used with gratitude:
+Soarcut and Flycut macOS incorporate the following libraries, used with gratitude:
 	• ShortcutRecorder by Jesper et al. (<http://wafflesoftware.net/>)
 	• a modified version of UKPrefsPanel by Uli Kusterer (<http://www.zathras.de/>)
 	• SGHotKeysLib by Justin Williams (<https://github.com/agilebits/SGHotKeysLib>)
-Flycut iOS incorporates the following libraries, used with gratitude:
-	• MGSwipeTableCell by Imanol Fernandez (<https://github.com/MortimerGoro/MGSwipeTableCell>)
-	• a modified version of InAppSettingsKit by Luc Vandal and Ortwin Gentz (<https://github.com/futuretap/InAppSettingsKit>)
-Flycut macOS & iOS incorporates the following libraries, used with gratitude:
-	• MJCloudKitUserDefaultsSync by Mark Jerde (<https://github.com/MarkJerde/MJCloudKitUserDefaultsSync>)
 
 Jumpcut is open source code built with open source code. Jumpcut incorporates the
 following libraries, used with gratitude:

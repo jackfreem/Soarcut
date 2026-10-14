@@ -1,0 +1,691 @@
+*C\u
+bTRC
+desc
+gTRC
+HLino
+jaJP
+rTRC
+skSK
+text
+ A l 
+_doScroller:L
+_panWithGestureRecognizer:
+_popUpItemAction:
+_searchFieldCancel:
+_searchFieldSearch:
+--A-v-
+-appl
+-HP  
+,9,n,
+,Reference Viewing Condition in IEC61966-2.1
+;-;k;
+:6:t:
+!H!u!
+?!?a?
+.AppleSystemUIFont
+.AppleSystemUIFontDemi
+.arEG
+.IEC 61966-2.1 Default RGB colour space - sRGB
+'I'z'
+"'"U"
+(?(q(
+)8)k)
+]']x]
+{{-100, -100}, {15, 170}}
+{{-100, -100}, {87, 18}}
+{{-3, 109}, {555, 376}}
+{{0, 0}, {1680, 1025}}
+{{0, 189}, {502, 282}}
+{{0, 227}, {555, 125}}
+{{0, 40}, {507, 520}}
+{{1, 1}, {474, 344}}
+{{113, 320}, {19, 28}}
+{{118, 407}, {77, 18}}
+{{134, 79}, {85, 32}}
+{{14, 112}, {479, 16}}
+{{14, 135}, {477, 18}}
+{{14, 155}, {477, 18}}
+{{14, 180}, {479, 16}}
+{{14, 263}, {477, 18}}
+{{14, 288}, {479, 16}}
+{{14, 312}, {61, 28}}
+{{14, 348}, {30, 28}}
+{{14, 384}, {479, 16}}
+{{14, 427}, {477, 18}}
+{{14, 447}, {477, 18}}
+{{14, 467}, {477, 18}}
+{{14, 487}, {477, 18}}
+{{14, 64}, {149, 16}}
+{{14, 88}, {121, 16}}
+{{143, 326}, {87, 14}}
+{{16, 16}, {476, 346}}
+{{16, 87}, {65, 18}}
+{{162, 55}, {85, 32}}
+{{178, 242}, {313, 21}}
+{{20, 6}, {352, 22}}
+{{201, 407}, {83, 18}}
+{{234, 326}, {29, 16}}E
+{{246, 63}, {83, 18}}
+{{247, 48}, {255, 61}}
+{{264, 320}, {19, 28}}
+{{294, 326}, {52, 14}}
+{{335, 63}, {81, 18}}
+{{34, 203}, {274, 18}}
+{{34, 223}, {345, 18}}
+{{34, 243}, {136, 18}}
+{{34, 408}, {80, 16}}
+{{350, 326}, {29, 16}}
+{{380, 320}, {19, 28}}
+{{387, 222}, {104, 21}}
+{{47, 355}, {189, 25}}
+{{542, 303}, {507, 471}}
+{{79, 326}, {34, 16}}
+{{89, 87}, {150, 22}}L
+{0, 0}
+{10000000000000, 10000000000000}L
+{14, 13}
+{14, 4}
+{213, 107}
+{213, 135}E
+{250, 1000}
+{250, 750}
+{251, 750}
+{384, 34}
+{4, 4}
+{474, 344}
+{502, 282}
+{507, 471}
+{507, 520}
+{551, 10000000}
+{555, 125}
+{555, 376}
+{8, -8}
+@#@d@
+*5*h*
+/$/Z/
+&'&W&
+&elGR
+#8#f#
+#wtpt
+%8%h%
++6+i+
+<'<e<
+="=a=
+> >`>
+$lumi
+$M$|$
+$ptBR
+$tech
+0 0 0.9981889725
+0 0 1 1
+0.602715373
+0.6666666667 1
+000
+050l0
+12, 20, 32
+2*2c2
+3desc
+4+4e4
+676r6
+7$7`7
+8itIT
+A)AjA
+About Flycut
+Acknowledgements
+acknowledgementsView
+acspAPPL
+acspMSFT
+activateAndOrderFrontStandardAboutPanel:
+After each clip
+allowsFloats
+AppController
+Appearance
+appearancePanel
+appl
+attributedStringForZero
+autoSaveToLocationButton
+AXDescription
+B0BrB
+bkpt
+bXYZ
+C:C}C
+caES
+cancel
+Clear All
+clearClippingList:
+Clippings
+Clippings:
+com.generalarcade.flycut.32.png
+controlBackgroundColor
+controlColor
+Controls how many clippings Flycut shows in the menu
+Controls how many clippings Flycut stores in its favorites stack
+Controls how many clippings Flycut stores in its stack
+controlTextColor
+Copy
+copy:
+Copyright (c) 1998 Hewlett-Packard Company
+Copyright Apple Inc., 2012
+cprt
+CRT curv
+csCZ
+curv
+cut:
+daDK
+decimalSeparator
+deDE
+delegate
+desc
+Desktop
+Detect with Upper, Lower, Digit, and Symbol lengths:
+Display in menu
+dmnd
+Don't copy from password fields
+dukUA
+Edit
+enUS
+esES
+F"FgF
+Favorites
+fiFI
+fnbNO
+For identifying types to include in Pasteboard Types above.E
+forgottenClippingsCheckbox
+forgottenFavoritesCheckbox
+forgottenItemLabel
+formatterBehaviorE
+frFU
+G5G{G
+General
+Generic Gray Gamma 2.2 Profile
+groupingSeparator
+gXYZ
+heIL
+Hotkeys
+hrHR
+huHU
+IB.objectdata
+IB.systemFontUpdateVersion
+IBClassName
+IBClassReference
+IBDesignImageConfiguration
+IBDesignSize
+IBModuleName
+IBModuleProvider
+IBNamespaceID
+IBNSBoxIsUsingDocumentContentView
+IBNSClipsToBounds
+IBNSLayoutMarginsGuide
+IBNSSafeAreaLayoutGuide
+iCloud Sync:
+IEC http://www.iec.ch
+IEC sRGB
+In the bezel, moving down from the last item takes you to the top and moving up from the first item takes you to the bottom.E
+Include pasteboard types in clippings list
+J7J}J
+jcMenu
+KKSK
+kTRC
+L*LrL
+labelColor
+Launch Flycut on login
+linkColor
+LkoKR
+LptPO
+lwtpt
+Main Hotkey
+mainRecorder
+maxValue
+maxValue: values.rememberNum
+meas
+Menu
+Menu selection pastes
+Merge All
+mergeClippingList:
+mluc
+mntrGRAYXYZ 
+mntrRGB XYZ 
+Move pasted item to top of stack
+N%NnN
+negativeFormat
+negativeInfinitySymbol
+net.sf.jumpcut.preferences.appearance.tiff
+net.sf.jumpcut.preferences.general.tiff
+net.sf.jumpcut.preferences.hotkey.tiff
+NeverE
+NIBArchive
+nilSymbol
+none
+NS.allowsfloats
+NS.attributes
+NS.boolval
+NS.bytes
+NS.compact
+NS.decimal
+NS.exponent
+NS.hasthousands
+NS.intval
+NS.length
+NS.localized
+NS.mantissa
+NS.mantissa.bo
+NS.max
+NS.min
+NS.nan
+NS.negative
+NS.negativeattrs
+NS.negativeformat
+NS.nil
+NS.positiveattrs
+NS.positiveformat
+NS.rounding
+NS.sizeval
+NS.special
+NS.thousand
+NS.zero
+NSAccessibilityConnectors
+NSAccessibilityEncodedAttributesValueType
+NSAccessibilityOidsKeys
+NSAccessibilityOidsValues
+NSAccessibilityOverriddenAttributes
+NSAction
+NSAlignment
+NSAllowsLogicalLayoutDirection
+NSAllowsTighteningForTruncation
+NSAllowTruncatedLabels
+NSAlternateContents
+NSAlternateImage
+NSAltersState
+NSAntiCompressionPriority
+NSApplication
+NSAppliesImmediately
+NSArray
+NSArrowPosition
+NSAttributedString
+NSAttributes
+NSAutomaticallyAdjustsContentInsets
+NSAutomaticTextCompletionDisabled
+NSAutomaticTextCompletionStored
+NSAutorepeat
+NSAuxButtonType
+NSBackgroundColor
+NSBGColor
+NSBinding
+NSBorderType
+NSBox
+NSBoxType
+NSButton
+NSButtonCell
+NSButtonFlags
+NSButtonFlags2
+NSButtonImageSource
+NSCancelButtonCell
+NSCatalogName
+NSCell
+NSCellFlags
+NSCellFlags2
+NSCharacterPickerEnabled
+NSChildControllerCreationSelectorName
+NSClassName
+NSClipView
+NSColor
+NSColorName
+NSColorSpace
+NSComponents
+NSConnections
+NSConstant
+NSConstantV2
+NSContents
+NSContentView
+NSControlAction
+NSControlContinuous
+NSControlLineBreakMode
+NSControlRefusesFirstResponder
+NSControlSendActionMask
+NSControlSize
+NSControlSize2
+NSControlTarget
+NSControlTextAlignment
+NSControlUsesSingleLineMode
+NSControlView
+NSControlWritingDirection
+NSCursor
+NSCursorType
+NSCurValue
+NSCustomColorSpace
+NSCustomObject
+NSCustomResource
+NSCustomView
+NSData
+NSDecimalNumberPlaceholder
+NSDefaultParagraphStyle
+NSDelegate
+NSDestination
+NSDictionary
+NSDocView
+NSDoNotTranslateAutoresizingMask
+NSDrawsBackground
+NSEnabled
+NSfFlags
+NSFile
+NSFirstAttribute
+NSFirstAttributeV2
+NSFirstItem
+NSFlags
+NSFont
+NSFontUsesAppearanceFontSize
+NSFormatter
+NSFrame
+NSFrameSize
+NSGestureRecognizer.action
+NSGestureRecognizer.allowedTouchTypes
+NSGestureRecognizer.delegate
+NSGestureRecognizer.target
+NSGestureRecognizers
+NSHotSpot
+NSHScroller
+NSHuggingPriority
+NSIBHelpConnector
+NSIBObjectData
+NSICC
+NSID
+NSIdentifier
+NSImage
+NSImageName
+NSIncrement
+NSInlinedValue
+NSInsertionColor
+NSIsDisabled
+NSIsHidden
+NSIsSeparator
+NSKeyEquiv
+NSKeyEquivalent
+NSKeyEquivModMask
+NSKeyPath
+NSLabel
+NSLayoutConstraint
+NSLayoutManager
+NSLinkAttributes
+NSLMFlags
+NSMagnification
+NSMarkedAttributes
+NSMarker
+NSMaxFullScreenContentSize
+NSMaximumRecents
+NSMaxMagnification
+NSMaxSize
+NSMaxValue
+NSMenu
+NSMenuCheckmarkx
+NSMenuItem
+NSMenuItemRespectAlignment
+NSMenuItems
+NSMenuMixedState
+NSMinFullScreenContentSize
+NSMinMagnification
+NSMinSize
+NSMinValue
+NSMinWidth
+NSMixedImage
+NSMnemonicLoc
+NSModel
+NSMoreFlags
+NSMutableArray
+NSMutableDictionary
+NSMutableSet
+NSMutableString
+NSName
+NSNextKeyView
+NSNextResponder
+NSNibBindingConnector
+NSNibBindingConnectorVersion
+NSNibControlConnector
+NSNibOutletConnector
+NSNibTouchBar
+NSNumber
+NSNumberFormatter
+NSObject
+NSObject
+NSObjectsKeys
+NSObjectsValues
+NSOffsets
+NSOidsKeys
+NSOidsValues
+NSOnImage
+NSPanel
+NSPanGestureRecognizer
+NSPanGestureRecognizer.buttonMask
+NSPanGestureRecognizer.numberOfTouchesRequired
+NSParagraphStyle
+NSPeriodicDelay
+NSPeriodicInterval
+NSPlaceholderString
+NSPopUpButton
+NSPopUpButtonCell
+NSPreferredEdge
+NSPreferredTextFinderStyle
+NSPreviousConnector
+NSRelation
+NSResourceName
+NSReuseIdentifierKey
+NSRGB
+NSRoot
+NSScreenRect
+NSScrollAmts
+NSScroller
+NSScrollView
+NSSearchButtonCell
+NSSearchField
+NSSearchFieldCell
+NSSearchFieldFlags
+NSSecondAttribute
+NSSecondAttributeV2
+NSSecondItem
+NSSelectedAttributes
+NSSelectedIndex
+NSSelectedTabViewItem
+NSsFlags
+NSSharedData
+NSSharedInstance
+NSShouldBeArchived
+NSSize
+NSSource
+NSSpace
+NSState
+NSStepper
+NSStepperAutorepeat
+NSStepperCell
+NSStepperIncrement
+NSStepperMaxValue
+NSStepperMinValue
+NSStepperWraps
+NSString
+NSSubmenu
+NSSubviews
+NSSuperview
+NSSupport
+NSSwitch
+NSSymbolicConstant
+NSTabStops
+NSTabView
+NSTabViewItem
+NSTabViewItems
+NSTarget
+NSTCFlags
+NSTextBezelStyle
+NSTextCheckingTypes
+NSTextColor
+NSTextContainer
+NSTextContainers
+NSTextField
+NSTextFieldAlignmentRectInsetsVersion
+NSTextFieldCell
+NSTextFinder
+NSTextLayoutManager
+NSTextStorage
+NSTextView
+NSTextViewSharedData
+NSTighteningFactorForTruncation
+NSTitle
+NSTitleCell
+NSTitlePosition
+NSToolTipHelpKey
+NSTransparent
+NSTvFlags
+NSTVFlags
+NSUnderline
+NSUserDefaultsController
+NSUserInterfaceItemIdentifier
+NSUsesItemFromMenu
+NSValue
+NSValueWraps
+NSvFlags
+NSView
+NSViewClass
+NSViewConstraints
+NSViewIsLayerTreeHost
+NSViewWantsBestResolutionOpenGLSurface
+NSVisibleWindows
+NSVScroller
+NSWhite
+NSWidth
+NSWindowBacking
+NSWindowClass
+NSWindowContentMinSize
+NSWindowIsRestorable
+NSWindowRect
+NSWindowStyleMask
+NSWindowSubtitle
+NSWindowTemplate
+NSWindowTitle
+NSWindowView
+NSWTFlags
+On exit
+Organizing:
+OtherViews
+P'PqP
+PasswordPboardType
+Passwords:L
+Paste
+paste:
+Pasteboard types:
+pdmdd
+plPL
+positiveFormat
+positiveInfinitySymbolE
+Preferences
+prefsPanel
+Quit
+r_ic
+R1R|R
+Redo
+redo:
+Remember
+Remove duplicates
+roRO
+rXYZ
+Save
+Save forgotten items to:
+Save from bezel to:
+saveFromBezelToLabel
+saveToLocationButton
+Saving:
+savingSectionLabelL
+search
+Search...
+searchBox
+searchItems:
+Select All
+selectAll:
+selectedIndex
+selectedIndex: values.savePreference
+selectedTextBackgroundColor
+selectedTextColor
+Selecting a clipping from the menu causes it to be pasted instead of copied back onto the pasteboard.
+selectSaveLocation:
+setDisplayNumPref:
+setFavoritesRememberNumPref:
+setRememberNumPref:
+setSavePreference:
+Settings
+showPreferencePanel:
+sig 
+sRGB IEC61966-2.1
+SRRecorderControl
+Sticky bezel (bezel, or pop-up, stays visible after hotkey is released)
+submenuAction:E
+svSE
+System
+tabView
+terminate:E
+testbox
+text
+textBackgroundColor
+textColor
+The bezel must be manually dismissed using the "escape" or "return" keys.E
+This text is loaded from acknowledgements.txt
+thTH
+To change the hotkey, simply click on the recorder and type another. To clear the hotkey, click on the "X". Use of a hotkey claimed by another application can lead to unpredictable results.
+toggleICloudSyncClippings:
+toggleICloudSyncSettings:
+toggleLoadOnStartup:
+TtrTR
+u(pp
+U(UuU
+UINibEncoderEmptyKey
+UKPrefsPanel
+Undo
+undo:
+usesGroupingSeparatorL
+value
+value: values.displayNumy
+value: values.favoritesRememberNum
+value: values.loadOnStartupL
+value: values.menuSelectionPastes
+value: values.pasteMovesToTopE
+value: values.rememberNum
+value: values.removeDuplicates
+value: values.revealPasteboardTypesL
+value: values.saveForgottenClippings
+value: values.saveForgottenFavorites
+value: values.skipPasswordFields
+value: values.skipPasswordLengths
+value: values.skipPasswordLengthsList
+value: values.skipPboardTypes
+value: values.skipPboardTypesList
+value: values.stickyBezel
+value: values.syncClippingsViaICloud
+value: values.syncSettingsViaICloudE
+value: values.wraparoundBezel
+values.displayNum
+values.favoritesRememberNumL
+values.loadOnStartupE
+values.menuSelectionPastes
+values.pasteMovesToTop
+values.rememberNum
+values.removeDuplicatesA
+values.revealPasteboardTypes
+values.saveForgottenClippings
+values.saveForgottenFavorites
+values.savePreference
+values.skipPasswordFields
+values.skipPasswordLengths
+values.skipPasswordLengthsList
+values.skipPboardTypes
+values.skipPboardTypesList
+values.stickyBezel
+values.syncClippingsViaICloud
+values.syncSettingsViaICloud
+values.wraparoundBezel
+view
+viewL
+viVN
+vnlNL
+vued
+Wraparound bezel (the first and last items are adjacent in order)
+X/X}X
+xruRU
+XYZ 
+ydscm
+zhCN
+zhTW
