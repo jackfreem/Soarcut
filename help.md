@@ -1,5 +1,5 @@
 ### Soarcut Help
-<a href="http://itunes.apple.com/us/app/flycut-clipboard-manager/id442160987?mt=12"><img src="http://a3.mzstatic.com/us/r1000/047/Purple/fb/53/f2/mzi.mcaxwyjm.175x175-75.png" /></a><br />
+<img src="Design/Soarcut-1024.png" width="128" alt="Soarcut icon" /><br />
 **Basics**
 
 Copy the same way as always.
