@@ -37,6 +37,7 @@
 	SRKeyCodeTransformer        *srTransformer;
 	BOOL						isBezelDisplayed;
 	BOOL						isBezelPinned; // Currently not used
+	BOOL						isTypingAsKeystrokes;
 	NSString					*currentKeycodeCharacter;
     NSDateFormatter*            dateFormat;
 
@@ -62,6 +63,7 @@
     IBOutlet NSSearchField *searchBox;
     NSResponder *menuFirstResponder;
     dispatch_queue_t menuQueue;
+    dispatch_queue_t typingQueue;
     NSRunningApplication *currentRunningApplication;
     IBOutlet NSSlider * heightSlider;
     IBOutlet NSSlider * widthSlider;
@@ -90,6 +92,7 @@
 -(void) setPBBlockCount:(NSNumber *)newPBBlockCount;
 -(void) hideApp;
 -(void) fakeCommandV;
+-(void) typeStringAsKeystrokes:(NSString *)content;
 -(IBAction)clearClippingList:(id)sender;
 -(IBAction)mergeClippingList:(id)sender;
 -(void)controlTextDidChange:(NSNotification *)aNotification;
@@ -112,6 +115,7 @@
 // Menu related
 -(void) updateMenu;
 -(IBAction) processMenuClippingSelection:(id)sender;
+-(IBAction) processMenuClippingTypingSelection:(id)sender;
 -(IBAction) activateAndOrderFrontStandardAboutPanel:(id)sender;
 
 // Preference related
