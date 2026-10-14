@@ -1,6 +1,6 @@
 name: Build and Release
 
-# Cuts a Flycut release when a version tag (e.g. v1.9.7) is pushed.
+# Cuts a Soarcut release when a version tag (e.g. v0.1.0) is pushed.
 #
 # Behaviour degrades gracefully by which secrets are configured:
 #   - No secrets            -> ad-hoc signed .app in the DMG (Gatekeeper will warn; for testing only)
@@ -10,7 +10,6 @@ name: Build and Release
 # Required secrets for a proper release (see RELEASE_SETUP.md):
 #   CERTIFICATES_P12         base64 of your "Developer ID Application" .p12
 #   CERTIFICATES_PASSWORD    password for that .p12
-#   NOTARY_TEAM_ID           your Apple Developer Team ID (e.g. S8JLSG5ES7); used as DEVELOPMENT_TEAM when signing
 #   NOTARY_KEY               base64 of your App Store Connect API key (.p8)
 #   NOTARY_KEY_ID            the API key's Key ID
 #   NOTARY_ISSUER_ID         the API key's Issuer ID
@@ -87,28 +86,19 @@ jobs:
 
     - name: Build and archive (unsigned)
       run: |
-        # Always archive unsigned, then sign explicitly in the next step. This avoids
-        # xcodebuild applying a single CODE_SIGN_ENTITLEMENTS to every target (the
-        # embedded framework has no root-level entitlements file and would fail).
+        # Always archive unsigned, then sign explicitly in the next step.
+        # (The project and scheme keep their Flycut names; the product is Soarcut.app.)
         xcodebuild -project Flycut.xcodeproj -scheme Flycut -configuration Release \
-          -archivePath build/Flycut.xcarchive archive \
+          -archivePath build/Soarcut.xcarchive archive \
           CODE_SIGNING_ALLOWED=NO
 
     - name: Export and sign app
       run: |
         mkdir -p build/Export
-        cp -R build/Flycut.xcarchive/Products/Applications/Flycut.app build/Export/
-        APP="build/Export/Flycut.app"
+        cp -R build/Soarcut.xcarchive/Products/Applications/Soarcut.app build/Export/
+        APP="build/Export/Soarcut.app"
         if [ -n "$SIGNING_IDENTITY" ]; then
-          # Sign inside-out with Developer ID + hardened runtime + secure timestamp.
-          # Framework: no entitlements. Helper + main app: the Developer ID (non-sandbox)
-          # entitlements. The MAS build (Flycut.entitlements) is untouched.
-          FW="$APP/Contents/Frameworks/MJCloudKitUserDefaultsSync.framework"
-          [ -d "$FW" ] && codesign --force --options runtime --timestamp \
-            --sign "$SIGNING_IDENTITY" "$FW"
-          HELPER="$APP/Contents/Library/LoginItems/FlycutHelper.app"
-          [ -d "$HELPER" ] && codesign --force --options runtime --timestamp \
-            --entitlements FlycutDeveloperID.entitlements --sign "$SIGNING_IDENTITY" "$HELPER"
+          # Developer ID + hardened runtime + secure timestamp, non-sandboxed entitlements.
           codesign --force --options runtime --timestamp \
             --entitlements FlycutDeveloperID.entitlements --sign "$SIGNING_IDENTITY" "$APP"
           codesign --verify --deep --strict --verbose=2 "$APP"
@@ -121,11 +111,11 @@ jobs:
     - name: Create DMG
       run: |
         mkdir -p build/dmg-staging
-        cp -R build/Export/Flycut.app build/dmg-staging/
+        cp -R build/Export/Soarcut.app build/dmg-staging/
         ln -s /Applications build/dmg-staging/Applications
-        hdiutil create -volname "Flycut" -srcfolder build/dmg-staging \
-          -ov -format UDZO "$PWD/build/Flycut.dmg"
-        ls -lh build/Flycut.dmg
+        hdiutil create -volname "Soarcut" -srcfolder build/dmg-staging \
+          -ov -format UDZO "$PWD/build/Soarcut-${{ steps.get_version.outputs.version }}.dmg"
+        ls -lh build/Soarcut-*.dmg
 
     - name: Notarize and staple
       if: env.HAS_NOTARY == 'true' && env.SIGNING_IDENTITY != ''
@@ -137,14 +127,14 @@ jobs:
         echo "Submitting DMG to Apple notary service (App Store Connect API key)..."
         # NOTARY_KEY holds the base64-encoded .p8 App Store Connect API key.
         echo "$NOTARY_KEY" | base64 --decode > "$RUNNER_TEMP/notary_key.p8"
-        xcrun notarytool submit build/Flycut.dmg \
+        xcrun notarytool submit build/Soarcut-${{ steps.get_version.outputs.version }}.dmg \
           --key "$RUNNER_TEMP/notary_key.p8" \
           --key-id "$NOTARY_KEY_ID" \
           --issuer "$NOTARY_ISSUER_ID" \
           --wait
         rm -f "$RUNNER_TEMP/notary_key.p8"
-        xcrun stapler staple build/Flycut.dmg
-        xcrun stapler validate build/Flycut.dmg
+        xcrun stapler staple build/Soarcut-${{ steps.get_version.outputs.version }}.dmg
+        xcrun stapler validate build/Soarcut-${{ steps.get_version.outputs.version }}.dmg
         echo "Notarized and stapled."
 
     - name: Clean up keychain
@@ -177,13 +167,13 @@ jobs:
           echo "$NOTES"
           echo ""
           echo "## Installation"
-          echo "1. Download the DMG below, open it, and drag Flycut to Applications."
-          echo "2. Launch Flycut and grant Accessibility permission when prompted"
+          echo "1. Download the DMG below, open it, and drag Soarcut to Applications."
+          echo "2. Launch Soarcut and grant Accessibility permission when prompted"
           echo "   (System Settings > Privacy & Security > Accessibility)."
           echo ""
           echo "**Upgrading and paste stopped working?** Reset the permission and re-grant it:"
           echo '```'
-          echo "tccutil reset Accessibility com.generalarcade.flycut"
+          echo "tccutil reset Accessibility com.jackfreem.soarcut"
           echo '```'
           echo ""
           echo "_Build: $SIGN._"
@@ -193,8 +183,8 @@ jobs:
     - name: Upload DMG artifact
       uses: actions/upload-artifact@v4
       with:
-        name: Flycut-dmg
-        path: build/Flycut.dmg
+        name: Soarcut-dmg
+        path: build/Soarcut-*.dmg
 
     # Publish a GitHub Release only for tag pushes. A manual (workflow_dispatch)
     # run builds + signs + notarizes as a dry run without publishing anything.
@@ -202,9 +192,9 @@ jobs:
       if: startsWith(github.ref, 'refs/tags/')
       uses: softprops/action-gh-release@v2
       with:
-        files: build/Flycut.dmg
+        files: build/Soarcut-*.dmg
         body_path: release_notes.md
-        name: Flycut ${{ steps.get_version.outputs.version }}
+        name: Soarcut ${{ steps.get_version.outputs.version }}
         draft: false
         prerelease: false
       env:

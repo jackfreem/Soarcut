@@ -85,7 +85,6 @@
 		358AFD37E01422982734E5BB /* soarcut-xout.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut-xout.png"; path = "Resources/soarcut-xout.png"; sourceTree = "<group>"; };
 		367492A25C99DA4B0EDB5D3F /* soarcut-xout@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut-xout@2x.png"; path = "Resources/soarcut-xout@2x.png"; sourceTree = "<group>"; };
 		44A70E2EB212FA710AAC9ABA /* soarcut-black@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut-black@2x.png"; path = "Resources/soarcut-black@2x.png"; sourceTree = "<group>"; };
-		77192A1E23D4376200EDB9BC /* FlycutDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FlycutDebug.entitlements; sourceTree = "<group>"; };
 		77192A3723D6EADF00EDB9BC /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		773ABFAF13E9AA1A00AE3969 /* NSWindow+TrueCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+TrueCenter.h"; sourceTree = "<group>"; };
 		773ABFB013E9AA1A00AE3969 /* NSWindow+TrueCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+TrueCenter.m"; sourceTree = "<group>"; };
@@ -140,7 +139,6 @@
 		8D1107320486CEB800E47090 /* Flycut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flycut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D151CC11FAC2B38005132F0 /* acknowledgements.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = acknowledgements.txt; sourceTree = "<group>"; };
 		8D61FD581F7961D200BD4B3D /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/System/Library/Frameworks/UserNotifications.framework; sourceTree = DEVELOPER_DIR; };
-		8D84B6361F72FBA900DB58F9 /* Flycut.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Flycut.entitlements; sourceTree = "<group>"; };
 		8D84B63A1F7412E600DB58F9 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/System/Library/Frameworks/CloudKit.framework; sourceTree = DEVELOPER_DIR; };
 		8DC9C99B1F742115003BE8B5 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		9F2BD3E0EDD832BB4E319536 /* soarcut@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut@2x.png"; path = "Resources/soarcut@2x.png"; sourceTree = "<group>"; };
@@ -214,8 +212,6 @@
 		29B97314FDCFA39411CA2CEA = {
 			isa = PBXGroup;
 			children = (
-				77192A1E23D4376200EDB9BC /* FlycutDebug.entitlements */,
-				8D84B6361F72FBA900DB58F9 /* Flycut.entitlements */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,

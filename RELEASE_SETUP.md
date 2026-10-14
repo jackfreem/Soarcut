@@ -1,92 +1,62 @@
-# Cutting a Flycut release
+# Cutting a Soarcut release
 
-Releases are produced by `.github/workflows/release.yml`, which runs when a
-`v*` tag is pushed. It builds the macOS app, packages it in a DMG, optionally
-signs + notarizes it, and publishes a GitHub Release with the DMG attached.
+Releases are produced by `.github/workflows/release.yml`, which runs when a `v*`
+tag is pushed. It builds `Soarcut.app`, packages it as `Soarcut-<version>.dmg`,
+signs and notarizes it if the secrets below are set, and publishes a GitHub
+Release with the DMG attached. Running the workflow manually (workflow_dispatch)
+does the same as a dry run without publishing.
 
-## One-time setup: GitHub secrets
+## Cutting a release
 
-Add these under **Settings → Secrets and variables → Actions**. The workflow
-adapts to whichever are present, so you can start with none (test build) and
-add them as you go.
+1. Add a `## <version>` section at the top of `CHANGELOG.md`. It becomes the
+   release notes (the workflow falls back to the commit log if it's missing).
+2. Tag and push:
+
+   ```
+   git tag v0.1.0
+   git push origin v0.1.0
+   ```
+
+The workflow stamps `MARKETING_VERSION` from the tag, so the app version always
+matches the tag.
+
+## Signing (optional, recommended)
+
+Without secrets the DMG contains an **ad-hoc signed** app: it works, but macOS
+warns on first launch ("unidentified developer") and users must approve it in
+System Settings > Privacy & Security. Accessibility permission may also need to be
+re-granted after each update.
+
+With an Apple Developer Program membership ($99/year), add these under
+**Settings > Secrets and variables > Actions** and releases are signed,
+notarized and stapled, so they open without warnings and keep their
+Accessibility permission across updates. That is also what MDM tools like Jamf
+expect.
 
 | Secret | Purpose |
 | --- | --- |
 | `CERTIFICATES_P12` | base64 of your **Developer ID Application** certificate exported as `.p12` |
-| `CERTIFICATES_PASSWORD` | the password you set when exporting the `.p12` |
-| `NOTARY_TEAM_ID` | your Apple Developer Team ID (`S8JLSG5ES7`); used as the signing `DEVELOPMENT_TEAM` |
-| `NOTARY_KEY` | base64 of your App Store Connect API key (`.p8`) |
-| `NOTARY_KEY_ID` | the API key's **Key ID** |
-| `NOTARY_ISSUER_ID` | the API key's **Issuer ID** |
+| `CERTIFICATES_PASSWORD` | the password set when exporting the `.p12` |
+| `NOTARY_KEY` | base64 of an App Store Connect API key (`.p8`), role Developer |
+| `NOTARY_KEY_ID` | the API key's Key ID |
+| `NOTARY_ISSUER_ID` | the API key's Issuer ID |
 
-Notarization uses an **App Store Connect API key** (not an Apple-ID app-specific
-password): it's a team credential, independent of any personal account, and cleanly
-revocable. Create it at **App Store Connect → Users and Access → Integrations → App
-Store Connect API**, generate a **Team Key** (role: Developer), and **download the
-`.p8` once** (it can't be re-downloaded). Note the Key ID and Issuer ID shown there.
-
-Export the signing `.p12` and base64-encode the credentials:
+Create the API key at **App Store Connect > Users and Access > Integrations >
+App Store Connect API** (Team Key). The `.p8` downloads only once.
 
 ```
-# In Keychain Access: export your "Developer ID Application" identity as Certificates.p12
-base64 -i Certificates.p12 | gh secret set CERTIFICATES_P12 -R TermiT/Flycut
-base64 -i AuthKey_XXXXXXXXXX.p8 | gh secret set NOTARY_KEY -R TermiT/Flycut
-gh secret set CERTIFICATES_PASSWORD -R TermiT/Flycut   # prompts for the .p12 passphrase
-gh secret set NOTARY_KEY_ID -R TermiT/Flycut --body "XXXXXXXXXX"
-gh secret set NOTARY_ISSUER_ID -R TermiT/Flycut --body "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-gh secret set NOTARY_TEAM_ID -R TermiT/Flycut --body "S8JLSG5ES7"
+base64 -i Certificates.p12 | gh secret set CERTIFICATES_P12 -R jackfreem/Soarcut
+gh secret set CERTIFICATES_PASSWORD -R jackfreem/Soarcut   # prompts for the passphrase
+base64 -i AuthKey_XXXXXXXXXX.p8 | gh secret set NOTARY_KEY -R jackfreem/Soarcut
+gh secret set NOTARY_KEY_ID -R jackfreem/Soarcut --body "XXXXXXXXXX"
+gh secret set NOTARY_ISSUER_ID -R jackfreem/Soarcut --body "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
-Behaviour by secrets configured:
+| Secrets configured | Result |
+| --- | --- |
+| none | ad-hoc signed; Gatekeeper warns on first launch |
+| signing only | Developer ID signed, hardened runtime; still warned until notarized |
+| signing + notary | signed, notarized and stapled; installs cleanly |
 
-- **none** → ad-hoc signed app in the DMG. Gatekeeper will warn; use only for testing.
-- **signing only** → Developer ID signed with hardened runtime (still warned until notarized).
-- **signing + notary** → signed, notarized, and stapled — installs cleanly with no warning.
-
-## Cutting a release
-
-```
-# 1. Make sure master is green and the version is bumped (MARKETING_VERSION).
-# 2. Tag and push:
-git tag v1.9.7
-git push origin v1.9.7
-```
-
-The workflow stamps `MARKETING_VERSION` from the tag, builds, packages, (signs +
-notarizes if secrets are set), and creates the GitHub Release. Release notes are
-taken from the matching `## 1.9.7` section of `CHANGELOG.md`, falling back to the
-commit log if that section is absent.
-
-## Two channels: entitlements
-
-1.9.7 ships on **both** channels, which need different entitlements:
-
-- **`Flycut.entitlements`** — Mac App Store build. App Sandbox on, iCloud
-  (CloudKit) container, `aps-environment`. Unchanged; used by the normal Release
-  config and the MAS submission.
-- **`FlycutDeveloperID.entitlements`** — Developer ID direct-download build. Not
-  sandboxed, no MAS-only iCloud/`aps` keys (invalid without a provisioning profile
-  under Developer ID). The workflow passes this via `CODE_SIGN_ENTITLEMENTS` in the
-  archive step. The CloudKit guard added in 1.9.7 means the app runs safely without
-  the iCloud entitlement (sync just no-ops); iCloud sync is unavailable in the
-  direct-download build unless you register a Developer-ID iCloud container.
-
-### Channel A — Developer ID DMG (this workflow)
-
-Configure the secrets above, then push a `v*` tag (see below). The workflow builds
-with `FlycutDeveloperID.entitlements`, notarizes, staples, and publishes the DMG.
-
-> First-run caveat: this app bundles a login-item helper and an embedded
-> framework. Notarization requires every nested binary to be Developer ID-signed
-> with the hardened runtime. That can only be fully validated once
-> `CERTIFICATES_P12` is set and the first tagged build runs — expect to iterate
-> once on nested-code signing if notarization reports an unsigned/instrumented
-> nested binary. (The command-line `CODE_SIGN_ENTITLEMENTS` override also applies
-> to the helper, which is harmless — it only launches the main app.)
-
-### Channel B — Mac App Store update
-
-Don't use this workflow. In Xcode: select the **Flycut** scheme, Product → Archive,
-then Organizer → **Distribute App → App Store Connect**. This uses
-`Flycut.entitlements` (sandbox + iCloud) unchanged and goes through App Review.
-Bump `MARKETING_VERSION` (already 1.9.7) and submit the same source as the DMG.
+Soarcut is not sandboxed and has no embedded helpers or frameworks, so only the
+app itself is signed (with `FlycutDeveloperID.entitlements`).
