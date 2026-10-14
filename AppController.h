@@ -38,6 +38,7 @@
 	BOOL						isBezelDisplayed;
 	BOOL						isBezelPinned; // Currently not used
 	BOOL						isTypingAsKeystrokes;
+	BOOL						didWarnPasteNeedsAccessibility;
 	NSString					*currentKeycodeCharacter;
     NSDateFormatter*            dateFormat;
 

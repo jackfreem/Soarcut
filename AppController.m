@@ -970,7 +970,26 @@ static void pollPasteboardTimerFired(void *context)
 }
 
 /*" +fakeCommandV synthesizes keyboard events for Cmd-v Paste shortcut. "*/
--(void)fakeCommandV { [self fakeKey:@(kVK_ANSI_V) withCommandFlag:TRUE]; }
+-(void)fakeCommandV
+{
+	// Without Accessibility permission the synthesized Cmd-V is silently dropped, so say why once per launch.
+	NSDictionary *options = @{(id) (kAXTrustedCheckOptionPrompt): @NO};
+	if ( !AXIsProcessTrustedWithOptions((CFDictionaryRef) options) ) {
+		if ( !didWarnPasteNeedsAccessibility ) {
+			didWarnPasteNeedsAccessibility = YES;
+			NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+			alert.messageText = @"Paste needs Accessibility access";
+			alert.informativeText = @"The clipping is on the clipboard, but Flycut can't press Cmd-V for you until it is allowed in System Settings > Privacy & Security > Accessibility. If Flycut is already listed, remove it and add it again.";
+			[alert addButtonWithTitle:@"Open Settings"];
+			[alert addButtonWithTitle:@"Cancel"];
+			[NSApp activateIgnoringOtherApps:YES];
+			if ( [alert runModal] == NSAlertFirstButtonReturn )
+				[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"]];
+		}
+		return;
+	}
+	[self fakeKey:@(kVK_ANSI_V) withCommandFlag:TRUE];
+}
 
 /* Types text directly for applications that do not accept clipboard paste. */
 -(void)typeStringAsKeystrokes:(NSString *)content
