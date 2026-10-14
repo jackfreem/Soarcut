@@ -29,9 +29,10 @@ Download the latest release from [Releases](https://github.com/jackfreem/Soarcut
 ## Privacy and security
 
 - Soarcut **skips clipboard items that password managers mark as concealed or transient** (1Password, Bitwarden and other apps that follow the [nspasteboard.org](http://nspasteboard.org) convention). This is on by default under Preferences > General.
-- Clipboard history is kept in memory and, by default, **saved unencrypted on quit** to `~/Library/Preferences/com.jackfreem.soarcut.plist`, readable by other apps running as you. To keep history in memory only, set **Preferences > General > Save** to **Never**.
+- Soarcut is **not sandboxed** (it ships outside the Mac App Store), so like any non-App Store app it runs with your user's file access.
+- Clipboard history is kept in memory and **saved unencrypted** to `~/Library/Preferences/com.jackfreem.soarcut.plist` (on quit by default, or after every clip if you choose that), readable by other apps running as you. To keep history in memory only, set **Preferences > General > Save** to **Never**. The optional "save forgotten clippings" feature writes clippings as text files to a folder you pick; it's off by default.
 - Soarcut sends nothing over the network. Accessibility access is used only to press Cmd-V (or type a clipping) for you.
-- Releases list a SHA-256 checksum for the DMG. Until releases are Developer ID signed and notarized, macOS will warn on first launch; check the checksum before approving it.
+- Until releases are Developer ID signed and notarized, macOS will warn on first launch. Only download Soarcut from this repository's Releases page. Each release lists the DMG's SHA-256, which confirms the download isn't corrupted or truncated (it lives on the same page, so it isn't proof of authenticity; signing will be).
 
 Please report security issues privately through GitHub's **Report a vulnerability** button on the Security tab rather than in a public issue.
 

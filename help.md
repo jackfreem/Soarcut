@@ -24,7 +24,7 @@ Here's a complete list of keys you can use in the Bezel.
 
 **Return**: Paste the clipboard history item currently displayed, closing the Bezel.
 
-**t** or **T**: Type the clipboard history item currently displayed as individual keystrokes, closing the Bezel. This is useful for VM consoles and other fields that block clipboard paste. Soarcut must have Accessibility permission. Keep the destination focused until typing finishes.
+**t** or **T**: Type the clipboard history item currently displayed as individual keystrokes, closing the Bezel. This is useful for VM consoles and other fields that block clipboard paste. Soarcut must have Accessibility permission. Keep the destination focused: typing stops if you switch apps. Each line break presses Return, except trailing ones, which are dropped.
 
 **Esc**: Close the bezel without pasting, preserving bezel position in the history.
 

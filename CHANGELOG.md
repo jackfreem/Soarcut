@@ -19,7 +19,8 @@ continuing the Jumpcut → Flycut lineage.
 - New name, icon and bundle ID (`com.jackfreem.soarcut`). Settings and history
   start fresh; Flycut's are untouched.
 - Removed: the iOS app, iCloud sync, the App Store sandbox build and its login-item
-  helper. Soarcut is a macOS-only, direct-download app.
+  helper. Soarcut is a macOS-only, direct-download app. Clippings that Flycut
+  previously synced to iCloud stay in your iCloud account; Soarcut never reads them.
 
 The Flycut history below is kept for reference.
 

@@ -17,8 +17,8 @@ does the same as a dry run without publishing.
    git push origin v0.1.0
    ```
 
-The workflow stamps `MARKETING_VERSION` from the tag, so the app version always
-matches the tag.
+For `x.y.z` tags the workflow stamps `MARKETING_VERSION` from the tag, so the app
+version matches. Other tags (e.g. `v0.2.0-rc1`) keep the committed version.
 
 ## Signing (optional, recommended)
 
@@ -40,6 +40,12 @@ expect.
 | `NOTARY_KEY` | base64 of an App Store Connect API key (`.p8`), role Developer |
 | `NOTARY_KEY_ID` | the API key's Key ID |
 | `NOTARY_ISSUER_ID` | the API key's Issuer ID |
+
+Before adding these, protect them: create a GitHub **Environment** named `release`
+(Settings > Environments) with yourself as a required reviewer, limited to `v*`
+tags, store the secrets there instead of as repository secrets, and add
+`environment: release` to the workflow's job. Then nobody with write access can
+run a modified workflow that reads them without your approval.
 
 Create the API key at **App Store Connect > Users and Access > Integrations >
 App Store Connect API** (Team Key). The `.p8` downloads only once.

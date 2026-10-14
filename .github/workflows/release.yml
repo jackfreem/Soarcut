@@ -34,6 +34,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       with:
+        persist-credentials: false
         fetch-depth: 0   # full history so changelog/version derivation works
 
     - name: Set up Xcode
@@ -50,11 +51,11 @@ jobs:
           VERSION="$(git describe --tags --always 2>/dev/null || echo dev)"
         fi
         echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "VERSION=$VERSION" >> "$GITHUB_ENV"
         echo "Building version: $VERSION"
 
     - name: Stamp version into the project
       run: |
-        VERSION="${{ steps.get_version.outputs.version }}"
         # Keep the user-facing version in sync with the tag (numeric x.y.z only).
         if [[ "$VERSION" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
           /usr/bin/sed -i '' "s/MARKETING_VERSION = [0-9.]*;/MARKETING_VERSION = ${VERSION};/g" Flycut.xcodeproj/project.pbxproj
@@ -81,6 +82,10 @@ jobs:
         security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASSWORD" "$KEYCHAIN_PATH"
         rm certificate.p12
         IDENTITY="$(security find-identity -v -p codesigning "$KEYCHAIN_PATH" | grep 'Developer ID Application' | head -1 | sed -E 's/.*"(.*)"/\1/')"
+        if [ -z "$IDENTITY" ]; then
+          echo "::error::CERTIFICATES_P12 is set but contains no 'Developer ID Application' identity. Refusing to fall back to an unsigned build."
+          exit 1
+        fi
         echo "SIGNING_IDENTITY=$IDENTITY" >> "$GITHUB_ENV"
         echo "Using identity: $IDENTITY"
 
@@ -114,7 +119,7 @@ jobs:
         cp -R build/Export/Soarcut.app build/dmg-staging/
         ln -s /Applications build/dmg-staging/Applications
         hdiutil create -volname "Soarcut" -srcfolder build/dmg-staging \
-          -ov -format UDZO "$PWD/build/Soarcut-${{ steps.get_version.outputs.version }}.dmg"
+          -ov -format UDZO "$PWD/build/Soarcut-$VERSION.dmg"
         ls -lh build/Soarcut-*.dmg
 
     - name: Notarize and staple
@@ -127,28 +132,29 @@ jobs:
         echo "Submitting DMG to Apple notary service (App Store Connect API key)..."
         # NOTARY_KEY holds the base64-encoded .p8 App Store Connect API key.
         echo "$NOTARY_KEY" | base64 --decode > "$RUNNER_TEMP/notary_key.p8"
-        xcrun notarytool submit build/Soarcut-${{ steps.get_version.outputs.version }}.dmg \
+        xcrun notarytool submit "build/Soarcut-$VERSION.dmg" \
           --key "$RUNNER_TEMP/notary_key.p8" \
           --key-id "$NOTARY_KEY_ID" \
           --issuer "$NOTARY_ISSUER_ID" \
           --wait
         rm -f "$RUNNER_TEMP/notary_key.p8"
-        xcrun stapler staple build/Soarcut-${{ steps.get_version.outputs.version }}.dmg
-        xcrun stapler validate build/Soarcut-${{ steps.get_version.outputs.version }}.dmg
+        xcrun stapler staple "build/Soarcut-$VERSION.dmg"
+        xcrun stapler validate "build/Soarcut-$VERSION.dmg"
         echo "Notarized and stapled."
 
     - name: Clean up keychain
       if: always()
-      run: security delete-keychain "$RUNNER_TEMP/build.keychain" 2>/dev/null || true
+      run: |
+        security delete-keychain "$RUNNER_TEMP/build.keychain" 2>/dev/null || true
+        rm -f certificate.p12 "$RUNNER_TEMP/notary_key.p8"
 
     - name: Assemble release notes
       run: |
-        VERSION="${{ steps.get_version.outputs.version }}"
         # Prefer a curated section from CHANGELOG.md; fall back to the commit log.
         NOTES=""
         if [ -f CHANGELOG.md ]; then
           NOTES="$(awk -v v="$VERSION" '
-            $0 ~ "^## " && $0 ~ v {grab=1; next}
+            $0 == "## " v || index($0, "## " v " ") == 1 {grab=1; next}
             grab && /^## / {exit}
             grab {print}' CHANGELOG.md)"
         fi

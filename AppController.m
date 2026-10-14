@@ -1000,25 +1000,30 @@ static void pollPasteboardTimerFired(void *context)
 }
 
 /*" +fakeCommandV synthesizes keyboard events for Cmd-v Paste shortcut. "*/
+// Without Accessibility permission synthesized key events are silently dropped, so say why once per launch.
+-(BOOL)canSynthesizeKeyEvents
+{
+	NSDictionary *options = @{(id) (kAXTrustedCheckOptionPrompt): @NO};
+	if ( AXIsProcessTrustedWithOptions((CFDictionaryRef) options) )
+		return YES;
+	if ( !didWarnPasteNeedsAccessibility ) {
+		didWarnPasteNeedsAccessibility = YES;
+		NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+		alert.messageText = @"Paste needs Accessibility access";
+		alert.informativeText = @"The clipping is on the clipboard, but Soarcut can't press Cmd-V or type for you until it is allowed in System Settings > Privacy & Security > Accessibility. If Soarcut is already listed, remove it and add it again.";
+		[alert addButtonWithTitle:@"Open Settings"];
+		[alert addButtonWithTitle:@"Cancel"];
+		[NSApp activateIgnoringOtherApps:YES];
+		if ( [alert runModal] == NSAlertFirstButtonReturn )
+			[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"]];
+	}
+	return NO;
+}
+
 -(void)fakeCommandV
 {
-	// Without Accessibility permission the synthesized Cmd-V is silently dropped, so say why once per launch.
-	NSDictionary *options = @{(id) (kAXTrustedCheckOptionPrompt): @NO};
-	if ( !AXIsProcessTrustedWithOptions((CFDictionaryRef) options) ) {
-		if ( !didWarnPasteNeedsAccessibility ) {
-			didWarnPasteNeedsAccessibility = YES;
-			NSAlert *alert = [[[NSAlert alloc] init] autorelease];
-			alert.messageText = @"Paste needs Accessibility access";
-			alert.informativeText = @"The clipping is on the clipboard, but Soarcut can't press Cmd-V for you until it is allowed in System Settings > Privacy & Security > Accessibility. If Soarcut is already listed, remove it and add it again.";
-			[alert addButtonWithTitle:@"Open Settings"];
-			[alert addButtonWithTitle:@"Cancel"];
-			[NSApp activateIgnoringOtherApps:YES];
-			if ( [alert runModal] == NSAlertFirstButtonReturn )
-				[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"]];
-		}
-		return;
-	}
-	[self fakeKey:@(kVK_ANSI_V) withCommandFlag:TRUE];
+	if ( [self canSynthesizeKeyEvents] )
+		[self fakeKey:@(kVK_ANSI_V) withCommandFlag:TRUE];
 }
 
 /* Types text directly for applications that do not accept clipboard paste. */
@@ -1030,10 +1035,14 @@ static void pollPasteboardTimerFired(void *context)
         NSBeep();
         return;
     }
+    if ( ![self canSynthesizeKeyEvents] )
+        return;
     isTypingAsKeystrokes = YES;
 
     NSString *normalizedText = [content stringByReplacingOccurrencesOfString:@"\r\n" withString:@"\n"];
     normalizedText = [normalizedText stringByReplacingOccurrencesOfString:@"\r" withString:@"\n"];
+    // Each line break presses Return; drop trailing ones so the last line (e.g. a shell command) is never submitted.
+    normalizedText = [normalizedText stringByReplacingOccurrencesOfString:@"\n+$" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, normalizedText.length)];
     NSString *text = [normalizedText copy];
 
     dispatch_async(typingQueue, ^{
@@ -1049,9 +1058,23 @@ static void pollPasteboardTimerFired(void *context)
                 return;
             }
 
+            // Type only into the app the user came from, and stop if they switch apps mid-way so the rest
+            // isn't typed into the wrong window. The menu path briefly activates Soarcut, so wait for focus to return.
+            pid_t ownPID = getpid();
+            pid_t targetPID = [[[NSWorkspace sharedWorkspace] frontmostApplication] processIdentifier];
+            for ( int i = 0; targetPID == ownPID && i < 50; i++ ) {
+                usleep(10000);
+                targetPID = [[[NSWorkspace sharedWorkspace] frontmostApplication] processIdentifier];
+            }
+
+            if ( targetPID != ownPID )
             [text enumerateSubstringsInRange:NSMakeRange(0, text.length)
                                      options:NSStringEnumerationByComposedCharacterSequences
                                   usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+                if ([[[NSWorkspace sharedWorkspace] frontmostApplication] processIdentifier] != targetPID) {
+                    *stop = YES;
+                    return;
+                }
                 if ([substring isEqualToString:@"\n"])
                     FlycutPostKeyCode(sourceRef, kVK_Return);
                 else if ([substring isEqualToString:@"\t"])

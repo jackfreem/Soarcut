@@ -4,8 +4,9 @@
 <dict>
 	<!--
 	  Entitlements for Soarcut's Developer ID (direct download / MDM) build.
-	  Deliberately not sandboxed: Soarcut ships outside the Mac App Store, and
-	  synthesizing paste needs Accessibility, which TCC grants per signed app.
+	  Deliberately not sandboxed: Soarcut ships outside the Mac App Store, where
+	  the sandbox isn't required. Synthesizing paste needs Accessibility, which
+	  TCC grants per signed app (sandboxed or not).
 	  Apple Events automation is kept for the legacy login-item fallback on
 	  macOS 12 and earlier.
 	-->
