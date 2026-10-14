@@ -1395,7 +1395,7 @@ didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
 	if ( nil == content )
 		return;
 
-	// This also records the pasteboard change count, so pollPB: will not treat
+	// This also records the pasteboard change count, so processPasteboardChange will not treat
 	// our own write as a new clipping and reset the position back to the top.
 	[self addClipToPasteboard:content];
 	[self performSelector:@selector(fakeCommandV) withObject:nil afterDelay:0.2];
