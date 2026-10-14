@@ -420,7 +420,8 @@ static void pollPasteboardTimerFired(void *context)
     if ( nil != currentRunningApplication )
     {
         // But only if the bezel hasn't opened since the menu closed.  This happens if the bezel hotkey is pressed while the menu is open.  The bezel won't display until the menu closes, but will then display.
-        if (!isBezelDisplayed)
+        // Likewise if activating Soarcut for the menu brought the prefs panel back; stealing focus would leave it unusable.
+        if (!isBezelDisplayed && ![prefsPanel isVisible])
             [currentRunningApplication activateWithOptions: NSApplicationActivateIgnoringOtherApps];
         // Paste from the bezel in this scenario works fine, so release and forget this resource in both cases.
         [currentRunningApplication release];
