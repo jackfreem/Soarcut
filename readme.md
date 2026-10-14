@@ -20,6 +20,15 @@ Soarcut continues a long lineage: [Jumpcut](http://jumpcut.sourceforge.net) by S
 
 Download the latest release from [Releases](https://github.com/jackfreem/Soarcut/releases), move **Soarcut.app** to Applications, and allow it in **System Settings → Privacy & Security → Accessibility** so it can paste for you.
 
+## Privacy and security
+
+- Soarcut **skips clipboard items that password managers mark as concealed or transient** (1Password, Bitwarden and other apps that follow the [nspasteboard.org](http://nspasteboard.org) convention). This is on by default under Preferences > General.
+- Clipboard history is kept in memory and, by default, **saved unencrypted on quit** to `~/Library/Preferences/com.jackfreem.soarcut.plist`, readable by other apps running as you. To keep history in memory only, set **Preferences > General > Save** to **Never**.
+- Soarcut sends nothing over the network. Accessibility access is used only to press Cmd-V (or type a clipping) for you.
+- Releases list a SHA-256 checksum for the DMG. Until releases are Developer ID signed and notarized, macOS will warn on first launch; check the checksum before approving it.
+
+Please report security issues privately through GitHub's **Report a vulnerability** button on the Security tab rather than in a public issue.
+
 ## Use
 
 See the [help file](help.md) for all bezel keys and menu features.
