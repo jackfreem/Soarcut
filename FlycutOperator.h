@@ -78,7 +78,6 @@
 -(void) saveEngine;
 -(bool) loadEngineFromPList;
 -(void) registerOrDeregisterICloudSync;
--(void) checkCloudKitUpdates;
 
 // Preference related
 -(void) willShowPreferences;

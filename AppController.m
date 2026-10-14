@@ -19,7 +19,6 @@
 #import "UKLoginItemRegistry.h"
 #import "NSWindow+TrueCenter.h"
 #import "NSWindow+ULIZoomEffect.h"
-#import "MJCloudKitUserDefaultsSync/MJCloudKitUserDefaultsSync.h"
 #import <ApplicationServices/ApplicationServices.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <ServiceManagement/ServiceManagement.h>
@@ -171,21 +170,7 @@ static void pollPasteboardTimerFired(void *context)
 
 - (void)registerOrDeregisterICloudSync
 {
-	if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"syncSettingsViaICloud"] ) {
-		[[MJCloudKitUserDefaultsSync sharedSync] removeNotificationsFor:MJSyncNotificationChanges forTarget:self];
-		[[MJCloudKitUserDefaultsSync sharedSync] addNotificationFor:MJSyncNotificationChanges withSelector:@selector(checkPreferencesChanges:) withTarget: self];
-		// Not registering for conflict notifications, since we just sync settings, and if the settings are conflictingly adjusted simultaneously on two systems there is nothing to say which setting is better.
-
-		[[MJCloudKitUserDefaultsSync sharedSync] startWithKeyMatchList:settingsSyncList
-					withContainerIdentifier:kiCloudId];
-	}
-	else {
-		[[MJCloudKitUserDefaultsSync sharedSync] stopForKeyMatchList:settingsSyncList];
-
-		[[MJCloudKitUserDefaultsSync sharedSync] removeNotificationsFor:MJSyncNotificationChanges forTarget:self];
-	}
-
-	[flycutOperator registerOrDeregisterICloudSync];
+	// iCloud sync was removed in Soarcut (it needs App Store entitlements and the sync library had no license).
 }
 
 - (void)showAccessibilityAlert {
@@ -225,6 +210,21 @@ static void pollPasteboardTimerFired(void *context)
 }
 
 
+
+// iCloud sync was removed, so hide its row in the General preferences (the nib can't be edited without Interface Builder).
+- (void)hideICloudPreferenceControlsIn:(NSView *)view
+{
+	for ( NSView *subview in [view subviews] ) {
+		if ( [subview isKindOfClass:[NSButton class]] ) {
+			SEL action = [(NSButton *)subview action];
+			if ( action == @selector(toggleICloudSyncSettings:) || action == @selector(toggleICloudSyncClippings:) )
+				[subview setHidden:YES];
+		} else if ( [subview isKindOfClass:[NSTextField class]] && [[(NSTextField *)subview stringValue] isEqualToString:@"iCloud Sync:"] ) {
+			[subview setHidden:YES];
+		}
+		[self hideICloudPreferenceControlsIn:subview];
+	}
+}
 
 - (void)awakeFromNib
 {
@@ -342,6 +342,10 @@ static void pollPasteboardTimerFired(void *context)
     // Check if the app has Accessibility permission
     [self showAccessibilityAlert];
     [self showOldOSXAlert];
+
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"syncSettingsViaICloud"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"syncClippingsViaICloud"];
+    [self hideICloudPreferenceControlsIn:[prefsPanel contentView]];
 }
 
 -(void)savePreferencesOnDict:(NSMutableDictionary *)saveDict
@@ -1304,32 +1308,9 @@ static void pollPasteboardTimerFired(void *context)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification
 {
-	// Enable notification from CloudKit
-	[NSApp registerForRemoteNotificationTypes:NSRemoteNotificationTypeNone];// silent push notification!
-
 	//Create our hot key
 	[self toggleMainHotKey:[NSNull null]];
 	[self togglePopPasteHotKey:[NSNull null]];
-}
-
-// Remote Notifications (APN, aka Push Notifications) are only available on apps distributed via the App Store.
-// To support building for both distribution channels, include the following two methods to detect if Remote Notifications are available and inform MJCloudKitUserDefaultsSync.
-- (void)application:(NSApplication *)application
-didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-	// Forward the token to your provider, using a custom method.
-	NSLog(@"Registered for remote notifications.");
-	[[MJCloudKitUserDefaultsSync sharedSync] setRemoteNotificationsEnabled:YES];
-}
-
-- (void)application:(NSApplication *)application
-didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-	NSLog(@"Remote notification support is unavailable due to error: %@", error);
-	[[MJCloudKitUserDefaultsSync sharedSync] setRemoteNotificationsEnabled:NO];
-}
-
-- (void)application:(NSApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
-{
-	[flycutOperator checkCloudKitUpdates];
 }
 
 - (void) updateBezel
