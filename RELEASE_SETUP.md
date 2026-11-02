@@ -41,21 +41,22 @@ expect.
 | `NOTARY_KEY_ID` | the API key's Key ID |
 | `NOTARY_ISSUER_ID` | the API key's Issuer ID |
 
-Before adding these, protect them: create a GitHub **Environment** named `release`
-(Settings > Environments) with yourself as a required reviewer, limited to `v*`
-tags, store the secrets there instead of as repository secrets, and add
-`environment: release` to the workflow's job. Then nobody with write access can
-run a modified workflow that reads them without your approval.
+The secrets live in the GitHub **Environment** named `release` (Settings >
+Environments), not as repository secrets. The workflow job declares
+`environment: release`; the environment requires the maintainer's approval for
+every run and only allows `v*` tags and `main` (for manual dry runs). Nobody with
+write access can run a modified workflow that reads the secrets without that
+approval. Each run pauses at "Waiting for review" until approved in the Actions tab.
 
 Create the API key at **App Store Connect > Users and Access > Integrations >
 App Store Connect API** (Team Key). The `.p8` downloads only once.
 
 ```
-base64 -i Certificates.p12 | gh secret set CERTIFICATES_P12 -R jackfreem/Soarcut
-gh secret set CERTIFICATES_PASSWORD -R jackfreem/Soarcut   # prompts for the passphrase
-base64 -i AuthKey_XXXXXXXXXX.p8 | gh secret set NOTARY_KEY -R jackfreem/Soarcut
-gh secret set NOTARY_KEY_ID -R jackfreem/Soarcut --body "XXXXXXXXXX"
-gh secret set NOTARY_ISSUER_ID -R jackfreem/Soarcut --body "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+base64 -i Certificates.p12 | gh secret set CERTIFICATES_P12 -R jackfreem/Soarcut --env release
+gh secret set CERTIFICATES_PASSWORD -R jackfreem/Soarcut --env release   # prompts for the passphrase
+base64 -i AuthKey_XXXXXXXXXX.p8 | gh secret set NOTARY_KEY -R jackfreem/Soarcut --env release
+gh secret set NOTARY_KEY_ID -R jackfreem/Soarcut --env release --body "XXXXXXXXXX"
+gh secret set NOTARY_ISSUER_ID -R jackfreem/Soarcut --env release --body "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
 ```
 
 | Secrets configured | Result |

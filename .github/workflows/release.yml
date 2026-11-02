@@ -26,6 +26,9 @@ permissions:
 jobs:
   build:
     runs-on: macos-latest
+    # Signing/notary secrets live in this environment, which requires
+    # maintainer approval and only runs for v* tags and main.
+    environment: release
     env:
       HAS_CERTIFICATES: ${{ secrets.CERTIFICATES_P12 != '' }}
       HAS_NOTARY: ${{ secrets.NOTARY_KEY != '' && secrets.NOTARY_KEY_ID != '' && secrets.NOTARY_ISSUER_ID != '' }}
