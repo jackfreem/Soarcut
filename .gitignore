@@ -9,3 +9,15 @@ build/
 *.mode2v3
 xcuserdata
 xcshareddata
+
+# Code signing and notarization credentials. These live outside the repo
+# (see RELEASE_SETUP.md) and must never be committed.
+*.p12
+*.p8
+*.cer
+*.key
+*.pem
+*.certSigningRequest
+*.mobileprovision
+*.provisionprofile
+AuthKey_*
