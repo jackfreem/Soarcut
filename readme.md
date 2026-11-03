@@ -24,7 +24,14 @@ That's the starting point, not the finish line. See the [changelog](CHANGELOG.md
 
 ## Install
 
-Download the latest release from [Releases](https://github.com/jackfreem/Soarcut/releases), move **Soarcut.app** to Applications, and allow it in **System Settings → Privacy & Security → Accessibility** so it can paste for you.
+No Xcode or developer tools needed.
+
+1. Download the latest `Soarcut-<version>.dmg` from [Releases](https://github.com/jackfreem/Soarcut/releases).
+2. Open it and drag **Soarcut** onto **Applications**.
+3. Open Soarcut from Applications. Releases are signed with a Developer ID and notarized by Apple, so macOS only shows its usual "downloaded from the internet" prompt.
+4. The first time you paste, allow Soarcut in **System Settings → Privacy & Security → Accessibility** so it can paste for you.
+
+Switching from Flycut? Quit it first: both use **Shift-Command-V**.
 
 ## Privacy and security
 
@@ -32,7 +39,7 @@ Download the latest release from [Releases](https://github.com/jackfreem/Soarcut
 - Soarcut is **not sandboxed** (it ships outside the Mac App Store), so like any non-App Store app it runs with your user's file access.
 - Clipboard history is kept in memory and **saved unencrypted** to `~/Library/Preferences/com.jackfreem.soarcut.plist` (on quit by default, or after every clip if you choose that), readable by other apps running as you. To keep history in memory only, set **Preferences > General > Save** to **Never**. The optional "save forgotten clippings" feature writes clippings as text files to a folder you pick; it's off by default.
 - Soarcut sends nothing over the network. Accessibility access is used only to press Cmd-V (or type a clipping) for you.
-- Until releases are Developer ID signed and notarized, macOS will warn on first launch. Only download Soarcut from this repository's Releases page. Each release lists the DMG's SHA-256, which confirms the download isn't corrupted or truncated (it lives on the same page, so it isn't proof of authenticity; signing will be).
+- Releases are **signed with a Developer ID and notarized by Apple**. Only download Soarcut from this repository's Releases page. To check an install, run `spctl -a -vv /Applications/Soarcut.app`: it should report `source=Notarized Developer ID` and `origin=Developer ID Application: John Freeman (MSLMU2KX2Y)`. Each release also lists the DMG's SHA-256.
 
 Please report security issues privately through GitHub's **Report a vulnerability** button on the Security tab rather than in a public issue.
 
