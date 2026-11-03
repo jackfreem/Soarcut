@@ -170,7 +170,7 @@ static void pollPasteboardTimerFired(void *context)
                          @"suppressAccessibilityAlert",
                         ];
 
-	menuQueue = dispatch_queue_create(@"com.Flycut.menuUpdateQueue", DISPATCH_QUEUE_SERIAL);
+	menuQueue = dispatch_queue_create("com.Flycut.menuUpdateQueue", DISPATCH_QUEUE_SERIAL);
 	typingQueue = dispatch_queue_create("com.Flycut.keystrokeTypingQueue", DISPATCH_QUEUE_SERIAL);
 
 	return [super init];
@@ -520,10 +520,11 @@ static void pollPasteboardTimerFired(void *context)
 	[self checkRememberNumPref:[sender intValue] forPrimaryStore:YES];
 }
 
--(int) checkRememberNumPref:(int)newRemember forPrimaryStore:(BOOL) isPrimaryStore
+-(void) checkRememberNumPref:(int)newRemember forPrimaryStore:(BOOL) isPrimaryStore
 {
 	int oldRemember = [flycutOperator rememberNum];
-	int setRemember = [flycutOperator setRememberNum:newRemember forPrimaryStore:YES];
+	// isPrimaryStore tells the operator which preference to restore if the user cancels the resize.
+	int setRemember = [flycutOperator setRememberNum:newRemember forPrimaryStore:isPrimaryStore];
 
 	if ( isPrimaryStore )
 	{
