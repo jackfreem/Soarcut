@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- After 20 clippings chosen from the bezel or menu, Soarcut asks once for a GitHub
+  star in a small panel under the menu bar icon. It never takes focus, hides itself
+  after 15 seconds, and never comes back once closed. "Star Soarcut on GitHub…" is
+  also in the menu. Admins can turn the prompt off by setting `starPromptDismissed`
+  to true.
+
 ## 0.1.0 (2026-11-02)
 
 First release of Soarcut, a fork of [Flycut](https://github.com/TermiT/Flycut) 1.9.7

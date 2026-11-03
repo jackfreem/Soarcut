@@ -1,0 +1,12 @@
+// Debug builds are "Soarcut Dev", a separate app from the release Soarcut in
+// /Applications: their own Accessibility entry, preferences and clipboard history,
+// and login item. Quit the release copy while testing, since both use Shift-Cmd-V.
+PRODUCT_BUNDLE_IDENTIFIER = com.jackfreem.soarcut.dev
+PRODUCT_NAME = Soarcut Dev
+
+// Your Apple Development team, so every rebuild keeps the same signature and
+// Accessibility permission survives it. Copy Local.xcconfig.example to
+// Local.xcconfig (ignored by git) and fill in your Team ID. Without it, set a team
+// in Xcode's Signing & Capabilities tab, or build with CODE_SIGN_IDENTITY=-.
+DEVELOPMENT_TEAM =
+#include? "Local.xcconfig"

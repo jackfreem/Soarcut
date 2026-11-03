@@ -67,3 +67,36 @@ gh secret set NOTARY_ISSUER_ID -R jackfreem/Soarcut --env release --body "xxxxxx
 
 Soarcut is not sandboxed and has no embedded helpers or frameworks, so only the
 app itself is signed (with `FlycutDeveloperID.entitlements`).
+
+## Local dev builds
+
+Debug builds are a separate app, **Soarcut Dev** (`com.jackfreem.soarcut.dev`), so
+they never touch the release Soarcut's Accessibility permission, preferences or
+clipboard history.
+
+One-time setup:
+
+1. Install Xcode, open it, and sign in under **Settings > Apple Accounts**.
+2. Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig` and set your
+   Team ID (`codesign -dv /Applications/Soarcut.app` prints it as `TeamIdentifier`).
+   Builds are then signed with your Apple Development certificate (Xcode creates
+   it on the first build if needed), so Accessibility permission survives rebuilds.
+
+Build and run (quit the release Soarcut first; both use Shift-Cmd-V). Xcode 27
+and later can't target macOS 10.13, the project's minimum, so local builds raise it:
+
+```
+xcodebuild -project Flycut.xcodeproj -scheme Flycut -configuration Debug \
+  -derivedDataPath build/dev -allowProvisioningUpdates \
+  MACOSX_DEPLOYMENT_TARGET=12.0 build
+open "build/dev/Build/Products/Debug/Soarcut Dev.app"
+```
+
+Allow **Soarcut Dev** under System Settings > Privacy & Security > Accessibility.
+
+To test the GitHub star prompt without 20 pastes:
+
+```
+defaults write com.jackfreem.soarcut.dev starPromptPasteCount -int 20  # next paste shows it
+defaults delete com.jackfreem.soarcut.dev starPromptDismissed          # undo a dismissal
+```
