@@ -40,7 +40,7 @@
 	RoundRecTextField	*textField;
 	RoundRecTextField	*charField;
 	NSImageView			*iconView;
-	id<BezelWindowDelegate>	delegate;
+	__weak id<BezelWindowDelegate>	delegate; // non-owning back-pointer (AppController owns the bezel)
     Boolean             color;
 	NSColor				*backgroundColorCache;
 	NSSize				backgroundColorCacheSize;

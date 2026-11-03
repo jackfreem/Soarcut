@@ -195,10 +195,9 @@ typedef NSInteger	NSWindowAnimationBehavior;
     NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage: windowImage];
     NSImage *image = [[NSImage alloc] initWithSize: NSMakeSize(CGImageGetWidth(windowImage) / backingScaleFactor, CGImageGetHeight(windowImage) / backingScaleFactor)];
     [image addRepresentation: bitmapRep];
-    [bitmapRep release];
     CGImageRelease(windowImage);
     
-    return [image autorelease];
+    return image;
 }
 
 
@@ -209,6 +208,10 @@ typedef NSInteger	NSWindowAnimationBehavior;
     NSRect			myFrame = [self frame];
     myFrame.size = [snapshotImage size];
     ULIQuicklyAnimatingWindow	*	animationWindow = [[ULIQuicklyAnimatingWindow alloc] initWithContentRect: myFrame styleMask: NSBorderlessWindowMask backing: NSBackingStoreBuffered defer: NO];
+    // Under MRC this +1 window was balanced by AppKit's release-on-close
+    //	(releasedWhenClosed defaults to YES). Under ARC the caller's strong
+    //	local owns it, so AppKit must not also release it on -close.
+    [animationWindow setReleasedWhenClosed: NO];
     [animationWindow setOpaque: NO];
     
     if( [animationWindow respondsToSelector: @selector(setAnimationBehavior:)] )
@@ -221,8 +224,6 @@ typedef NSInteger	NSWindowAnimationBehavior;
     [imageView setImage: snapshotImage];
     [imageView setAutoresizingMask: NSViewMinXMargin | NSViewMaxXMargin | NSViewMinYMargin | NSViewMaxYMargin | NSViewWidthSizable | NSViewHeightSizable];
     [[animationWindow contentView] addSubview: imageView];
-    
-    [imageView release];
     
     [animationWindow setHasShadow: YES];
     [animationWindow display];

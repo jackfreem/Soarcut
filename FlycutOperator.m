@@ -67,7 +67,6 @@
 						 @"skipPasswordLengthsList",
 						 @"removeDuplicates",
 						 @"pasteMovesToTop"];
-	[settingsSyncList retain];
 
 	return self;
 }
@@ -512,7 +511,10 @@
 //		The below tracks our position down down down... Maybe as an option?
 //		if ( [clippingStore jcListCount] > 1 ) stackPosition++;
 		stackPosition = 0;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [selectorTarget performSelector:clippingAddedSelector];
+#pragma clang diagnostic pop
 		[self actionAfterListModification];
 
 		return success;
@@ -706,7 +708,6 @@
 			else if ( 0 == [newContent jcListCount] )
 			{
 				// We have something.  iCloud has nothing.  Ignore iCloud this time.
-				[newContent release];
 				[self actionAfterListModification]; // To overwrite what sync put in the defaults.
 				return;
 			}
@@ -741,7 +742,6 @@
 				else if ( 0 == newDistinct )
 				{
 					// We have something.  iCloud has nothing.  Ignore iCloud this time.
-					[newContent release];
 					[self actionAfterListModification]; // To overwrite what sync put in the defaults.
 					return;
 				}
@@ -780,7 +780,6 @@
 					{
 						[[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO]
 																 forKey:@"syncClippingsViaICloud"];
-						[newContent release];
 						[self registerOrDeregisterICloudSync];
 						[self actionAfterListModification]; // To overwrite what sync put in the defaults.
 						return;
@@ -802,7 +801,6 @@
 							else if ( [choice isEqualToString:@"Overwrite iCloud List"] )
 							{
 								// Ignore iCloud this time.
-								[newContent release];
 								[self actionAfterListModification]; // To overwrite what sync put in the defaults.
 								return;
 							}
@@ -810,7 +808,6 @@
 							{
 								// This should be impossible, so cover it with disabling sync.
 								[[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO] forKey:@"syncClippingsViaICloud"];
-								[newContent release];
 								[self registerOrDeregisterICloudSync];
 								[self actionAfterListModification]; // To overwrite what sync put in the defaults.
 								return;
@@ -902,7 +899,6 @@
 #ifdef DEBUG
 		if ( !mergeLists )
 		{
-			[newContent release];
 			newContent = [self allocInitFlycutStoreRemembering:[clippingStore rememberNum]];
 			[self loadEngineFrom:loadDict key:listKey into:newContent];
 			newCount = [newContent jcListCount];
@@ -919,8 +915,6 @@
 		}
 #endif
 	}
-
-	[newContent release];
 }
 
 -(void) integrateInsertClipping:(FlycutClipping*)clipping toStore:(FlycutStore*)store atIndex:(int)index withMerge:(BOOL)mergeLists
@@ -1003,7 +997,6 @@
 		bool success = NO;
 		success |= [self loadEngineFrom:loadDict key:@"jcList" into:clippingStore];
 		success |= [self loadEngineFrom:loadDict key:@"favoritesList" into:favoritesStore];
-		[loadDict release];
 		return success;
 	}
 	return NO;
@@ -1090,7 +1083,10 @@
     [saveDict setObject:[NSNumber numberWithInt:[[NSUserDefaults standardUserDefaults] integerForKey:@"favoritesRememberNum"]]
                  forKey:@"favoritesRememberNum"];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 	[saveTarget performSelector:saveSelector withObject:saveDict];
+#pragma clang diagnostic pop
 
     [self saveStore:clippingStore toKey:@"jcList" onDict:saveDict];
     [self saveStore:favoritesStore toKey:@"favoritesList" onDict:saveDict];

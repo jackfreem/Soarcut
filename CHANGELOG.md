@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Requires macOS 13 Ventura or later.
+- Fixed several memory leaks (the bezel window, cancelled save-location
+  panels, preference views and copies of the clipping list) by moving the
+  app to automatic reference counting.
+
 ## 0.1.0 (2026-11-02)
 
 First release of Soarcut, a fork of [Flycut](https://github.com/TermiT/Flycut) 1.9.7

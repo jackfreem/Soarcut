@@ -30,7 +30,7 @@
 	if ( nowRemembering <= 0 )
 		nowRemembering = 40;
 
-    [super init];
+    self = [super init];
     jcList = [[NSMutableArray alloc] init];
 	insertionJournal = [[NSMutableArray alloc] init];
 	deletionJournal = [[NSMutableArray alloc] init];
@@ -55,8 +55,6 @@
 											 withTimestamp:timestamp];
 
 	int result = [self indexOfClipping: newClipping];
-
-	[newClipping release];
 
 	return result;
 }
@@ -91,7 +89,6 @@
 	
 	[self addClipping:newClipping];
 	
-	[newClipping release];
 	return YES;
 }
 
@@ -154,7 +151,6 @@
 
     NSMutableArray *emptyJCList;
     emptyJCList = [[NSMutableArray alloc] init];
-    [jcList release];
     jcList = emptyJCList;
 
     [self delegateEndUpdates];
@@ -319,7 +315,7 @@
 -(NSString *) clippingTypeAtPosition:(int)index
 {
     NSString *returnString;
-    returnString = [NSString stringWithString:[[jcList objectAtIndex:index] type]];
+    returnString = [NSString stringWithString:[(FlycutClipping *)[jcList objectAtIndex:index] type]];
 //    return [[jcList objectAtIndex:index] type];
     return returnString;
 }
@@ -328,7 +324,7 @@
 {
     NSRange theRange;
     NSArray *subArray;
-    NSMutableArray *returnArray = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *returnArray = [[NSMutableArray alloc] init];
     NSEnumerator *enumerator;
     FlycutClipping *aClipping;
     theRange.location = 0;
@@ -354,7 +350,7 @@
 {
     NSRange theRange;
     NSArray *subArray;
-    NSMutableArray *returnArray = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *returnArray = [[NSMutableArray alloc] init];
     NSEnumerator *enumerator;
     FlycutClipping *aClipping;
 
@@ -392,7 +388,7 @@
 -(NSArray *) previousIndexes:(int)howMany containing:(NSString*)search // This method is in newest-first order.
 {
     NSArray *subArray;
-    NSMutableArray *returnArray = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray *returnArray = [[NSMutableArray alloc] init];
     NSEnumerator *enumerator;
     FlycutClipping *aClipping;
 
@@ -471,19 +467,6 @@
 	modifiedSinceLastSaveStore = YES;
 	if ( self.delegate && [self.delegate respondsToSelector:@selector(moveClippingAtIndex:toIndex:)] )
 		[self.delegate moveClippingAtIndex:index toIndex:newIndex];
-}
-
--(void) dealloc
-{
-    // Free preferences
-    jcRememberNum = 0;
-    jcDisplayNum = 0;
-    jcDisplayLen = 0;
-
-    // Free collections
-    [jcList release];
-   
-    [super dealloc];
 }
 
 @end
