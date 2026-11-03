@@ -123,6 +123,12 @@ jobs:
         ln -s /Applications build/dmg-staging/Applications
         hdiutil create -volname "Soarcut" -srcfolder build/dmg-staging \
           -ov -format UDZO "$PWD/build/Soarcut-$VERSION.dmg"
+        if [ -n "$SIGNING_IDENTITY" ]; then
+          # Sign the disk image too (before notarizing), so Gatekeeper's check on
+          # the DMG itself passes, not only the check on the app inside it.
+          codesign --force --timestamp --sign "$SIGNING_IDENTITY" "build/Soarcut-$VERSION.dmg"
+          codesign --verify --verbose=2 "build/Soarcut-$VERSION.dmg"
+        fi
         ls -lh build/Soarcut-*.dmg
 
     - name: Notarize and staple
