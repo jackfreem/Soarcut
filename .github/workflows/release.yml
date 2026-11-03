@@ -181,6 +181,11 @@ jobs:
         {
           echo "$NOTES"
           echo ""
+          # Credit the maintainer who pushed the tag. GitHub lists everyone
+          # @mentioned in the notes as the release's Contributors; contributors
+          # credited in the changelog section above are kept as they are.
+          echo "Released by @${GITHUB_ACTOR}."
+          echo ""
           echo "## Installation"
           echo "1. Download the DMG below, open it, and drag Soarcut to Applications."
           echo "2. Launch Soarcut and grant Accessibility permission when prompted"
