@@ -607,7 +607,7 @@
 
 -(bool)setStackPositionTo:(int) newStackPosition
 {
-	if ( [clippingStore jcListCount] >= newStackPosition ) {
+	if ( newStackPosition >= 0 && newStackPosition < [clippingStore jcListCount] ) {
 		stackPosition = newStackPosition;
 		return YES;
 	}
@@ -619,7 +619,7 @@
 -(void)adjustStackPositionIfOutOfBounds
 {
 	if (stackPosition >= [clippingStore jcListCount] && stackPosition != 0) { // deleted last item
-		stackPosition = [clippingStore jcListCount] - 1;
+		stackPosition = MAX([clippingStore jcListCount] - 1, 0);
 	}
 }
 
@@ -1022,7 +1022,7 @@
 {
 	stackPosition--;
 	if ( stackPosition < 0 ) {
-		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"wraparoundBezel"] ) {
+		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"wraparoundBezel"] && [clippingStore jcListCount] > 0 ) {
 			stackPosition = [clippingStore jcListCount] - 1;
 			return YES;
 		} else {
