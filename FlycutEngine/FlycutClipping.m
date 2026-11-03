@@ -131,7 +131,10 @@
 	contentsRange = NSMakeRange(0, contentsEnd);
 	firstLineOfClipping = [trimmedString substringWithRange:contentsRange];
     if ( [firstLineOfClipping length] > clipDisplayLength ) {
-        newDisplayString = [[NSString stringWithString:[firstLineOfClipping substringToIndex:clipDisplayLength]] stringByAppendingString:@"…"];   
+        // Cut at the start of the character that straddles the limit, so emoji and other
+        // multi-unit characters are never split into invalid halves.
+        NSUInteger cut = [firstLineOfClipping rangeOfComposedCharacterSequenceAtIndex:clipDisplayLength].location;
+        newDisplayString = [[firstLineOfClipping substringToIndex:cut] stringByAppendingString:@"…"];
     } else {
         newDisplayString = [NSString stringWithString:firstLineOfClipping];
     }
@@ -196,6 +199,11 @@
 -(BOOL) hasName
 {
     return clipHasName;
+}
+
+// Must agree with -isEqual:, which compares contents only.
+- (NSUInteger)hash {
+    return [self.contents hash];
 }
 
 - (BOOL)isEqual:(id)other {

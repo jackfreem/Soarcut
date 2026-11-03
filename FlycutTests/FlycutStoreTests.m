@@ -499,8 +499,16 @@ static NSString * const kRemoveDuplicatesKey = @"removeDuplicates";
     FlycutStore *store = [self storeWithContents:@[@"a", @"b", @"c"] remembering:10]; // c b a
     [store clippingMoveFrom:0 To:2];
 
-    XCTExpectFailure(@"FlycutStore -clippingMoveFrom:To: always removes index+1, so moving toward the end "
-                     @"duplicates the moved clipping and drops a neighbour");
+    XCTAssertEqualObjects([self allContents:store], (@[@"b", @"a", @"c"]));
+
+    [store clippingMoveFrom:1 To:2]; // one step down
+    XCTAssertEqualObjects([self allContents:store], (@[@"b", @"c", @"a"]));
+}
+
+- (void)testMovePastEndMovesToEnd
+{
+    FlycutStore *store = [self storeWithContents:@[@"a", @"b", @"c"] remembering:10]; // c b a
+    XCTAssertNoThrow([store clippingMoveFrom:0 To:3]);
     XCTAssertEqualObjects([self allContents:store], (@[@"b", @"a", @"c"]));
 }
 

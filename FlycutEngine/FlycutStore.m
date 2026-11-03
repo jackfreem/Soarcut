@@ -182,8 +182,11 @@
 	[self delegateBeginUpdates];
 
 	FlycutClipping *clipping = [jcList objectAtIndex:index];
+	[jcList removeObjectAtIndex:index];
+	// Like insertClipping:atIndex:, treat a destination past the end as "move to the end".
+	if ( toIndex > (int)[jcList count] )
+		toIndex = (int)[jcList count];
 	[jcList insertObject:clipping atIndex:toIndex];
-	[jcList removeObjectAtIndex:index+1];
 	[self delegateMoveClippingAtIndex:index toIndex:toIndex];
 
 	[self delegateEndUpdates];

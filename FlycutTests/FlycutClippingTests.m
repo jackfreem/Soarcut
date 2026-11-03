@@ -114,12 +114,19 @@ static NSString * const kTextType = @"public.utf8-plain-text";
 
 - (void)testTruncationDoesNotSplitEmoji
 {
-    // Truncation uses -substringToIndex: on UTF-16 code units, so a display length that falls
-    // inside a surrogate pair leaves a lone surrogate (an invalid string) before the ellipsis.
+    // The display length counts UTF-16 units; truncation backs off to the start of any
+    // character that straddles the limit instead of leaving half of it behind.
     FlycutClipping *clip = [self clippingWithContents:@"😀😀😀" displayLength:1];
-    XCTExpectFailure(@"FlycutClipping -resetDisplayString truncates by UTF-16 unit and can split a surrogate pair");
     XCTAssertNotNil([clip.displayString dataUsingEncoding:NSUTF8StringEncoding],
                     @"display string should remain valid Unicode after truncation");
+    XCTAssertEqualObjects(clip.displayString, @"…");
+
+    XCTAssertEqualObjects([self clippingWithContents:@"😀😀😀" displayLength:2].displayString, @"😀…");
+    XCTAssertEqualObjects([self clippingWithContents:@"ab😀cd" displayLength:3].displayString, @"ab…");
+    XCTAssertEqualObjects([self clippingWithContents:@"🇯🇵🇺🇸" displayLength:2].displayString, @"…", @"a flag is one character");
+    XCTAssertEqualObjects([self clippingWithContents:@"🇯🇵🇺🇸" displayLength:4].displayString, @"🇯🇵…");
+    XCTAssertEqualObjects([self clippingWithContents:@"👨‍👩‍👧 family" displayLength:5].displayString, @"…",
+                          @"a ZWJ sequence is one character");
 }
 
 - (void)testSetContentsRecomputesDisplayString
@@ -183,7 +190,6 @@ static NSString * const kTextType = @"public.utf8-plain-text";
     FlycutClipping *b = [self clippingWithContents:@"same" displayLength:40];
     XCTAssertEqualObjects(a, b);
 
-    XCTExpectFailure(@"FlycutClipping overrides -isEqual: without overriding -hash, breaking NSSet/NSDictionary use");
     XCTAssertEqual(a.hash, b.hash);
     XCTAssertEqual(([NSSet setWithObjects:a, b, nil].count), (NSUInteger)1);
 }
