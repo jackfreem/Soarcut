@@ -31,6 +31,11 @@ static const float lineHeight = 16;
 		//set this window to be on top of all other windows
 		[self setLevel:NSScreenSaverWindowLevel];
 
+		// Owned by AppController's strong ivar; never let AppKit release it on
+		// -close (NSPanel already defaults to NO, this just makes it explicit
+		// so a close can't over-release under ARC).
+		[self setReleasedWhenClosed:NO];
+
 		[self setOpaque:NO];
 		[self setAlphaValue:1.0];
 		[self setOpaque:NO];
@@ -219,8 +224,7 @@ static const float lineHeight = 16;
         && backgroundColorCacheColor == color)
         return backgroundColorCache;
 
-    [backgroundColorCache release];
-    backgroundColorCache = [[self sizedBezelBackgroundWithRadius:25.0 withAlpha:backgroundAlpha] retain];
+    backgroundColorCache = [self sizedBezelBackgroundWithRadius:25.0 withAlpha:backgroundAlpha];
     backgroundColorCacheSize = backgroundSize;
     backgroundColorCacheAlpha = backgroundAlpha;
     backgroundColorCacheColor = color;
@@ -240,8 +244,6 @@ static const float lineHeight = 16;
 
 - (void)setTitle:(NSString *)newTitle
 {
-	[newTitle retain];
-	[title release];
 	title = newTitle;
 }
 
@@ -252,8 +254,6 @@ static const float lineHeight = 16;
 
 - (void)setCharString:(NSString *)newChar
 {
-	[newChar retain];
-	[charString release];
 	charString = newChar;
 	[charField.textField setStringValue:charString];
 }
@@ -264,8 +264,6 @@ static const float lineHeight = 16;
     // Since we can't see that much of it anyway, trim to 2000 characters.
     if ([newText length] > 2000)
         newText = [newText substringToIndex:2000];
-	[newText retain];
-	[bezelText release];
 	bezelText = newText;
 	[textField.textField setStringValue:bezelText];
 }
@@ -274,8 +272,6 @@ static const float lineHeight = 16;
 {
 	if (!showSourceField)
 		return;
-	[newSourceIcon retain];
-	[sourceIconImage release];
 	sourceIconImage = newSourceIcon;
 	[sourceIcon setImage:sourceIconImage];
 }
@@ -298,8 +294,6 @@ static const float lineHeight = 16;
 		} while (size.width >= sourceFieldApp.frame.size.width - 5);
 	}
 
-	[newSource retain];
-	[sourceText release];
 	sourceText = newSource;
 	[sourceFieldApp.textField setStringValue:sourceText];
 }
@@ -308,8 +302,6 @@ static const float lineHeight = 16;
 {
 	if (!showSourceField)
 		return;
-	[newDate retain];
-	[dateText release];
 	dateText = newDate;
 	[sourceFieldDate.textField setStringValue:dateText];
 }
@@ -333,7 +325,7 @@ static const float lineHeight = 16;
         [[NSColor colorWithCalibratedWhite:0.1 alpha:alpha] set];
     [roundedRec fill];
 	[bg unlockFocus];
-	return [NSColor colorWithPatternImage:[bg autorelease]];
+	return [NSColor colorWithPatternImage:bg];
 }
 
 - (NSColor *)sizedBezelBackgroundWithRadius:(float)radius withAlpha:(float)alpha
@@ -344,15 +336,6 @@ static const float lineHeight = 16;
 -(BOOL)canBecomeKeyWindow
 {
 	return YES;
-}
-
-- (void)dealloc
-{
-	[backgroundColorCache release];
-	[textField release];
-	[charField release];
-	[iconView release];
-	[super dealloc];
 }
 
 - (BOOL)performKeyEquivalent:(NSEvent*) theEvent

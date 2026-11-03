@@ -104,10 +104,10 @@
 -(void) clippingMoveFrom:(int)index To:(int)toIndex;
 
 /** optional delegate (not retained) */
-@property (nonatomic, nullable, assign) id<FlycutStoreDelegate> delegate;
+@property (nonatomic, nullable, weak) id<FlycutStoreDelegate> delegate;
 
 /** optional delegate (not retained) */
-@property (nonatomic, nullable, assign) id<FlycutStoreDeleteDelegate> deleteDelegate;
+@property (nonatomic, nullable, weak) id<FlycutStoreDeleteDelegate> deleteDelegate;
 
 // Delete all named clippings
 @end

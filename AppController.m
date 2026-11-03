@@ -80,9 +80,10 @@ static void FlycutPostUnicodeString(CGEventSourceRef sourceRef, NSString *string
 
 static void pollPasteboardTimerFired(void *context)
 {
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [(AppController *)context checkPasteboardChangeCount];
-    [pool drain];
+    @autoreleasepool {
+        // The context is a non-owning pointer to the AppController; the timer is cancelled before it goes away.
+        [(__bridge AppController *)context checkPasteboardChangeCount];
+    }
 }
 
 @implementation AppController
@@ -169,7 +170,6 @@ static void pollPasteboardTimerFired(void *context)
 						 @"saveForgottenFavorites",
                          @"suppressAccessibilityAlert",
                         ];
-	[settingsSyncList retain];
 
 	menuQueue = dispatch_queue_create(@"com.Flycut.menuUpdateQueue", DISPATCH_QUEUE_SERIAL);
 	typingQueue = dispatch_queue_create("com.Flycut.keystrokeTypingQueue", DISPATCH_QUEUE_SERIAL);
@@ -184,8 +184,8 @@ static void pollPasteboardTimerFired(void *context)
 
 - (void)showAccessibilityAlert {
     BOOL suppressAlert = [[NSUserDefaults standardUserDefaults] boolForKey:@"suppressAccessibilityAlert"];
-    NSDictionary* options = @{(id) (kAXTrustedCheckOptionPrompt): @NO};
-    if (!suppressAlert && AXIsProcessTrustedWithOptions != NULL && !AXIsProcessTrustedWithOptions((CFDictionaryRef) (options))) {
+    NSDictionary* options = @{(__bridge id) (kAXTrustedCheckOptionPrompt): @NO};
+    if (!suppressAlert && AXIsProcessTrustedWithOptions != NULL && !AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef) (options))) {
         NSAlert *alert = [NSAlert alertWithMessageText:@"Soarcut" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"For correct functioning of the app please tick Soarcut in Accessibility apps list"];
         alert.showsSuppressionButton = YES;
         [alert runModal];
@@ -278,11 +278,11 @@ static void pollPasteboardTimerFired(void *context)
 	// Create our pasteboard interface
     jcPasteboard = [NSPasteboard generalPasteboard];
     [jcPasteboard declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-    pbCount = [[NSNumber numberWithInt:[jcPasteboard changeCount]] retain];
+    pbCount = [NSNumber numberWithInt:[jcPasteboard changeCount]];
 
 	// Build the statusbar menu
-    statusItem = [[[NSStatusBar systemStatusBar]
-            statusItemWithLength:NSVariableStatusItemLength] retain];
+    statusItem = [[NSStatusBar systemStatusBar]
+            statusItemWithLength:NSVariableStatusItemLength];
     [statusItem setHighlightMode:YES];
     [self switchMenuIconTo: [[NSUserDefaults standardUserDefaults] integerForKey:@"menuIcon"]];
 	[statusItem setMenu:jcMenu];
@@ -302,7 +302,7 @@ static void pollPasteboardTimerFired(void *context)
     observedPasteboardChangeCount = [jcPasteboard changeCount];
     pasteboardPollQueue = dispatch_queue_create("com.Flycut.pasteboardPollQueue", DISPATCH_QUEUE_SERIAL);
     pasteboardPollTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, pasteboardPollQueue);
-    dispatch_set_context(pasteboardPollTimer, self);
+    dispatch_set_context(pasteboardPollTimer, (__bridge void *)self); // Not retained; see stopPasteboardPolling.
     dispatch_source_set_event_handler_f(pasteboardPollTimer, pollPasteboardTimerFired);
     dispatch_source_set_timer(pasteboardPollTimer,
                               dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC),
@@ -311,8 +311,8 @@ static void pollPasteboardTimerFired(void *context)
     dispatch_resume(pasteboardPollTimer);
 
     // Finish up
-	srTransformer = [[[SRKeyCodeTransformer alloc] init] retain];
-    pbBlockCount = [[NSNumber numberWithInt:0] retain];
+	srTransformer = [[SRKeyCodeTransformer alloc] init];
+    pbBlockCount = [NSNumber numberWithInt:0];
     [self processPasteboardChange];
     
     
@@ -375,8 +375,7 @@ static void pollPasteboardTimerFired(void *context)
         {
             // Synchronize the count so re-enabling storage does not capture the
             // pasteboard contents the user intentionally excluded.
-            [pbCount release];
-            pbCount = [[NSNumber numberWithInt:[jcPasteboard changeCount]] retain];
+            pbCount = [NSNumber numberWithInt:[jcPasteboard changeCount]];
         }
         [flycutOperator setDisableStoreTo:disableStore];
     }
@@ -395,7 +394,7 @@ static void pollPasteboardTimerFired(void *context)
         if ( [currRunningApp rangeOfString:@"Soarcut"].location == NSNotFound )
         {
             // We haven't activated Soarcut yet.
-            currentRunningApplication = [currApp retain]; // Remember what app we came from.
+            currentRunningApplication = currApp; // Remember what app we came from.
             [menu cancelTracking]; // Prevent the menu from displaying, since activateIgnoringOtherApps would close it anyway.
             [NSApp activateIgnoringOtherApps: YES]; // Required to make the search field firstResponder any good.
             [self performSelector:@selector(showMenuAfterActivation) withObject:nil afterDelay:0.2 inModes:[NSArray arrayWithObject:NSRunLoopCommonModes]]; // Because we really do want the menu open.
@@ -423,7 +422,6 @@ static void pollPasteboardTimerFired(void *context)
         if (!isBezelDisplayed)
             [currentRunningApplication activateWithOptions: NSApplicationActivateIgnoringOtherApps];
         // Paste from the bezel in this scenario works fine, so release and forget this resource in both cases.
-        [currentRunningApplication release];
         currentRunningApplication = nil;
     }
 }
@@ -462,7 +460,6 @@ static void pollPasteboardTimerFired(void *context)
 
 -(IBAction) activateAndOrderFrontStandardAboutPanel:(id)sender
 {
-    [currentRunningApplication release];
     currentRunningApplication = nil; // So it doesn't get pulled foreground atop the about panel.
     [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
     [[NSApplication sharedApplication] orderFrontStandardAboutPanel:sender];
@@ -623,7 +620,6 @@ static void pollPasteboardTimerFired(void *context)
 														  andFrame:NSMakeRect(16, rowY + 2, 65, 18)];
 	[rowLabel setFont:[NSFont systemFontOfSize:10]];
 	[hotkeyPanel addSubview:rowLabel];
-	[rowLabel release];
 
 	popPasteRecorder = [[SRRecorderControl alloc] initWithFrame:NSMakeRect(mainFrame.origin.x,
 																		  rowY,
@@ -637,7 +633,6 @@ static void pollPasteboardTimerFired(void *context)
 														 andFrame:NSMakeRect(mainFrame.origin.x, 4, 410, 42)];
 	[[rowHelp cell] setWraps:YES];
 	[hotkeyPanel addSubview:rowHelp];
-	[rowHelp release];
 }
 
 -(NSBox*) preferencePanelSliderRowForText:(NSString*)title withTicks:(int)ticks minText:(NSString*)minText maxText:(NSString*)maxText minValue:(double)min maxValue:(double)max frameMaxY:(int)frameMaxY binding:(NSString*)keyPath action:(SEL)action
@@ -823,7 +818,6 @@ static void pollPasteboardTimerFired(void *context)
 
 -(IBAction) showPreferencePanel:(id)sender
 {
-    [currentRunningApplication release];
     currentRunningApplication = nil; // So it doesn't get pulled foreground atop the preference panel.
 	if ([prefsPanel respondsToSelector:@selector(setCollectionBehavior:)])
 		[prefsPanel setCollectionBehavior:NSWindowCollectionBehaviorCanJoinAllSpaces];
@@ -1003,12 +997,12 @@ static void pollPasteboardTimerFired(void *context)
 // Without Accessibility permission synthesized key events are silently dropped, so say why once per launch.
 -(BOOL)canSynthesizeKeyEvents
 {
-	NSDictionary *options = @{(id) (kAXTrustedCheckOptionPrompt): @NO};
-	if ( AXIsProcessTrustedWithOptions((CFDictionaryRef) options) )
+	NSDictionary *options = @{(__bridge id) (kAXTrustedCheckOptionPrompt): @NO};
+	if ( AXIsProcessTrustedWithOptions((__bridge CFDictionaryRef) options) )
 		return YES;
 	if ( !didWarnPasteNeedsAccessibility ) {
 		didWarnPasteNeedsAccessibility = YES;
-		NSAlert *alert = [[[NSAlert alloc] init] autorelease];
+		NSAlert *alert = [[NSAlert alloc] init];
 		alert.messageText = @"Paste needs Accessibility access";
 		alert.informativeText = @"The clipping is on the clipboard, but Soarcut can't press Cmd-V or type for you until it is allowed in System Settings > Privacy & Security > Accessibility. If Soarcut is already listed, remove it and add it again.";
 		[alert addButtonWithTitle:@"Open Settings"];
@@ -1090,7 +1084,6 @@ static void pollPasteboardTimerFired(void *context)
             });
         }
     });
-    [text release];
 }
 
 /*" +fakeDownArrow synthesizes keyboard events for the down-arrow key. "*/
@@ -1137,8 +1130,7 @@ static void pollPasteboardTimerFired(void *context)
     NSInteger currentChangeCount = [jcPasteboard changeCount];
     if ( [pbCount integerValue] != currentChangeCount && ![flycutOperator storeDisabled] ) {
         // Record the change before reading its contents so it is processed once.
-        [pbCount release];
-        pbCount = [[NSNumber numberWithInteger:currentChangeCount] retain];
+        pbCount = [NSNumber numberWithInteger:currentChangeCount];
         NSString *type = [jcPasteboard availableTypeFromArray:[NSArray arrayWithObject:NSStringPboardType]];
         if ( type != nil ) {
 			NSRunningApplication *currRunningApp = nil;
@@ -1419,7 +1411,6 @@ static void pollPasteboardTimerFired(void *context)
 	if (mainHotKey != nil)
 	{
 		[[SGHotKeyCenter sharedCenter] unregisterHotKey:mainHotKey];
-		[mainHotKey release];
 		mainHotKey = nil;
 	}
 	mainHotKey = [[SGHotKey alloc] initWithIdentifier:@"mainHotKey"
@@ -1455,7 +1446,6 @@ static void pollPasteboardTimerFired(void *context)
 	if (popPasteHotKey != nil)
 	{
 		[[SGHotKeyCenter sharedCenter] unregisterHotKey:popPasteHotKey];
-		[popPasteHotKey release];
 		popPasteHotKey = nil;
 	}
 
@@ -1486,7 +1476,6 @@ static void pollPasteboardTimerFired(void *context)
 			[[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO]
 													 forKey:@"syncSettingsViaICloud"];
 		}
-		[alert release];
 		// Add option to overwrite iCloud.
 	}
 
@@ -1511,7 +1500,6 @@ static void pollPasteboardTimerFired(void *context)
 				[[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO]
 														 forKey:@"syncClippingsViaICloud"];
 			}
-			[alert release];
 		}
 	}
 
@@ -1539,7 +1527,6 @@ static void pollPasteboardTimerFired(void *context)
 				[[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:2]
 														 forKey:@"savePreference"];
 			}
-			[alert release];
 		}
 	}
 }
@@ -1547,7 +1534,6 @@ static void pollPasteboardTimerFired(void *context)
 - (IBAction)selectSaveLocation:(id)sender {
 	// Create and configure the panel.
 	NSOpenPanel* panel = [NSOpenPanel openPanel];
-	[panel retain];
 	[panel setCanChooseFiles:NO];
 	[panel setCanChooseDirectories:YES];
 	[panel setCanCreateDirectories:YES];
@@ -1558,8 +1544,6 @@ static void pollPasteboardTimerFired(void *context)
 	[panel beginSheetModalForWindow:prefsPanel completionHandler:^(NSInteger result){
 		if (result == NSFileHandlingPanelOKButton) {
 			NSURL* url = [[panel URLs] firstObject];
-
-			[panel release];
 
 			if (!url) { return; }
 
@@ -1641,7 +1625,6 @@ static void pollPasteboardTimerFired(void *context)
             [alternateItem setKeyEquivalentModifierMask:NSEventModifierFlagOption];
             [alternateItem setEnabled:YES];
             [jcMenu insertItem:alternateItem atIndex:0];
-            [alternateItem release];
 
             NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:title
                                               action:@selector(processMenuClippingSelection:)
@@ -1650,8 +1633,6 @@ static void pollPasteboardTimerFired(void *context)
             [item setRepresentedObject:[NSNumber numberWithInteger:i]];
             [item setEnabled:YES];
             [jcMenu insertItem:item atIndex:0];
-            // Way back in 0.2, failure to release the new item here was causing a quite atrocious memory leak.
-            [item release];
         }
     });
 }
@@ -1675,8 +1656,6 @@ static void pollPasteboardTimerFired(void *context)
 
 -(void) setPBBlockCount:(NSNumber *)newPBBlockCount
 {
-    [newPBBlockCount retain];
-    [pbBlockCount release];
     pbBlockCount = newPBBlockCount;
 }
 
@@ -1761,7 +1740,6 @@ static void pollPasteboardTimerFired(void *context)
 	}];
 	[alert setInformativeText:information];
 	NSInteger result = [alert runModal];
-	[alert release];
 	if ( result < NSAlertFirstButtonReturn || result >= NSAlertFirstButtonReturn + [buttons count] )
 		return nil;
 	return buttons[result - NSAlertFirstButtonReturn];
@@ -1817,11 +1795,9 @@ static void pollPasteboardTimerFired(void *context)
 	[flycutOperator applicationWillTerminate];
 	//Unregister our hot key (not required)
 	[[SGHotKeyCenter sharedCenter] unregisterHotKey: mainHotKey];
-	[mainHotKey release];
 	mainHotKey = nil;
 	if ( popPasteHotKey != nil ) {
 		[[SGHotKeyCenter sharedCenter] unregisterHotKey: popPasteHotKey];
-		[popPasteHotKey release];
 		popPasteHotKey = nil;
 	}
 	[self hideBezel];
@@ -1836,11 +1812,8 @@ static void pollPasteboardTimerFired(void *context)
 }
 
 - (void) dealloc {
+	// The poll timer holds an unretained pointer to self as its context, so it must stop first.
 	[self stopPasteboardPolling];
-	[bezel release];
-	[srTransformer release];
-	[popPasteRecorder release];
-	[super dealloc];
 }
 
 @end

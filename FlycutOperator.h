@@ -32,7 +32,7 @@
     FlycutStore				*stashedStore;
 
 	SEL saveSelector;
-	NSObject* saveTarget;
+	__weak NSObject* saveTarget; // Not retained (back-pointer to the owning AppController).
 	int displayNum;
 	int displayLength;
 
@@ -50,6 +50,7 @@
 // Basic functionality
 -(int)indexOfClipping:(NSString*)contents ofType:(NSString*)type fromApp:(NSString *)appName withAppBundleURL:(NSString *)bundleURL;
 -(bool)addClipping:(NSString*)contents ofType:(NSString*)type fromApp:(NSString *)appName withAppBundleURL:(NSString *)bundleURL target:(id)selectorTarget clippingAddedSelector:(SEL)clippingAddedSelectorclippingAddedSelector;
+-(BOOL)shouldSkip:(NSString *)contents ofType:(NSString *)type fromAvailableTypes:(NSArray<NSString *> *)availableTypes;
 -(int)stackPosition;
 -(NSString*)getPasteFromStackPosition;
 -(NSString*)getPasteFromIndex:(int) position;
@@ -106,7 +107,7 @@
 -(void)setFavoritesStoreDelegate:(id<FlycutStoreDelegate>) delegate;
 
 /** optional delegate (not retained) */
-@property (nonatomic, nullable, assign) id<FlycutOperatorDelegate> delegate;
+@property (nonatomic, nullable, weak) id<FlycutOperatorDelegate> delegate;
 
 @end
 
