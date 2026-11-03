@@ -3,6 +3,8 @@
 ## Unreleased
 
 - Requires macOS 13 Ventura or later.
+- Long clippings that start with or contain emoji or flags no longer show a broken
+  character where the menu cuts them off.
 - Fixed several memory leaks (the bezel window, cancelled save-location
   panels, preference views and copies of the clipping list) by moving the
   app to automatic reference counting.

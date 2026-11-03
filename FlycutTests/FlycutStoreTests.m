@@ -505,6 +505,13 @@ static NSString * const kRemoveDuplicatesKey = @"removeDuplicates";
     XCTAssertEqualObjects([self allContents:store], (@[@"b", @"c", @"a"]));
 }
 
+- (void)testMovePastEndMovesToEnd
+{
+    FlycutStore *store = [self storeWithContents:@[@"a", @"b", @"c"] remembering:10]; // c b a
+    XCTAssertNoThrow([store clippingMoveFrom:0 To:3]);
+    XCTAssertEqualObjects([self allContents:store], (@[@"b", @"a", @"c"]));
+}
+
 #pragma mark Journals
 
 - (void)testInsertionJournalRecordsNewestFirstAndIsCappedAtRememberNum
