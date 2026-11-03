@@ -3,6 +3,11 @@
 ## Unreleased
 
 - Requires macOS 13 Ventura or later.
+- Closing the bezel now returns from Favorites to History, so new copies always land
+  in History.
+- Fixed clippings being lost when Soarcut saved while Favorites were selected (your
+  favorites were saved over your history), and fixed the History and Favorites size
+  settings changing the wrong list or skipping the "clippings will be lost" warning.
 - Fixed several memory leaks (the bezel window, cancelled save-location
   panels, preference views and copies of the clipping list) by moving the
   app to automatic reference counting.

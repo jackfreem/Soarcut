@@ -135,12 +135,36 @@
 
 -(void) willShowPreferences
 {
-	issuedRememberResizeWarning = NO;
+	issuedPrimaryResizeWarning = NO;
+	issuedFavoritesResizeWarning = NO;
 }
 
+// The history list, whether or not favorites are currently selected.
+-(FlycutStore *)primaryStore
+{
+	return [self favoritesStoreIsSelected] ? stashedStore : clippingStore;
+}
+
+-(FlycutStore *)storeForPrimary:(BOOL)isPrimaryStore
+{
+	return isPrimaryStore ? [self primaryStore] : favoritesStore;
+}
+
+-(int)rememberNumForPrimaryStore:(BOOL)isPrimaryStore
+{
+	return [[self storeForPrimary:isPrimaryStore] rememberNum];
+}
+
+static int FlycutClampPosition(int position, int count)
+{
+	return MAX(0, MIN(position, count - 1));
+}
+
+// Resizes the history (isPrimaryStore) or favorites list, regardless of which one is selected.
 -(int) setRememberNum:(int)newRemember forPrimaryStore:(BOOL) isPrimaryStore
 {
-	int oldRemeber = [self rememberNum];
+	FlycutStore *store = [self storeForPrimary:isPrimaryStore];
+	int oldRemeber = [store rememberNum];
 
 	// Ensure that we don't remember zero or fewer clippings.
 	if ( newRemember <= 0 )
@@ -150,8 +174,8 @@
 			newRemember = 40;
 	}
 
-	if ( newRemember < [self jcListCount] &&
-		! issuedRememberResizeWarning &&
+	if ( newRemember < [store jcListCount] &&
+		! (isPrimaryStore ? issuedPrimaryResizeWarning : issuedFavoritesResizeWarning) &&
 		! [[NSUserDefaults standardUserDefaults] boolForKey:@"stifleRememberResizeWarning"]
 		) {
 
@@ -174,12 +198,18 @@
 													 forKey:@"stifleRememberResizeWarning"];
 		} else {
 			// Resize
-			issuedRememberResizeWarning = YES;
+			if ( isPrimaryStore )
+				issuedPrimaryResizeWarning = YES;
+			else
+				issuedFavoritesResizeWarning = YES;
 		}
 	}
 
 	// Set the value.
-	[clippingStore setRememberNum:newRemember];
+	[store setRememberNum:newRemember];
+
+	// The other list's saved position is clamped when switching to it.
+	[self adjustStackPositionIfOutOfBounds];
 
 	return newRemember;
 }
@@ -199,10 +229,14 @@
 
 -(void)switchToFavoritesStore
 {
+    // Switching again would stash the favorites over the only reference to the history list.
+    if ( [self favoritesStoreIsSelected] )
+        return;
     stashedStore = clippingStore;
     clippingStore = favoritesStore;
     stashedStackPosition = stackPosition;
-    stackPosition = favoritesStackPosition;
+    // The favorites may have shrunk since this position was saved.
+    stackPosition = FlycutClampPosition(favoritesStackPosition, [clippingStore jcListCount]);
 }
 
 - (bool)restoreStashedStore
@@ -212,7 +246,8 @@
         clippingStore = stashedStore;
         stashedStore = NULL;
         favoritesStackPosition = stackPosition;
-        stackPosition = stashedStackPosition;
+        // The history may have shrunk since this position was saved.
+        stackPosition = FlycutClampPosition(stashedStackPosition, [clippingStore jcListCount]);
         return YES;
     }
     return NO;
@@ -1071,7 +1106,9 @@
 
 -(void) saveEngine {
 	// saveEngine saves to NSUserDefaults.  If there have been no modifications, just skip this to avoid busy activity for any observers.
-	if ( !([clippingStore modifiedSinceLastSaveStore]
+	// Always save the history list as history, even while favorites are selected.
+	FlycutStore *historyStore = [self primaryStore];
+	if ( !([historyStore modifiedSinceLastSaveStore]
 		   || [favoritesStore modifiedSinceLastSaveStore]) )
 		return;
 
@@ -1088,7 +1125,7 @@
 	[saveTarget performSelector:saveSelector withObject:saveDict];
 #pragma clang diagnostic pop
 
-    [self saveStore:clippingStore toKey:@"jcList" onDict:saveDict];
+    [self saveStore:historyStore toKey:@"jcList" onDict:saveDict];
     [self saveStore:favoritesStore toKey:@"favoritesList" onDict:saveDict];
 
     [[NSUserDefaults standardUserDefaults] setObject:saveDict forKey:@"store"];
