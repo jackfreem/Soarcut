@@ -9,6 +9,8 @@ build/
 *.mode2v3
 xcuserdata
 xcshareddata
+# ...but track the project's shared schemes (the Flycut scheme defines the test run).
+!Flycut.xcodeproj/xcshareddata/
 
 # Code signing and notarization credentials. These live outside the repo
 # (see RELEASE_SETUP.md) and must never be committed.
