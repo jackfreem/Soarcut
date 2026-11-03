@@ -67,6 +67,13 @@
 		DBEB0C9C1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = DBEB0C9A1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h */; };
 		DBEB0C9D1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = DBEB0C9B1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m */; };
 		EC2174567D83879DA014490E /* soarcut-xout.png in Resources */ = {isa = PBXBuildFile; fileRef = 358AFD37E01422982734E5BB /* soarcut-xout.png */; };
+		DA406542CE8F4124AD6E87E8 /* FlycutClippingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DA52D4C7F01F4B6D84A31F6E /* FlycutClippingTests.m */; };
+		1EE4CA879B3140759A3F16A6 /* FlycutStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFD9F8AED59427CA9ACEC5B /* FlycutStoreTests.m */; };
+		AD6959413E3D40969FEFA8D2 /* FlycutOperatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6A40599BFD784DCBA4A41E32 /* FlycutOperatorTests.m */; };
+		A3B4DB0848B44BD6B5BB6F5C /* FlycutClipping.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DA6B901CB9549B0077917F /* FlycutClipping.m */; };
+		6C746A49AACF444E80F386E7 /* FlycutStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 77DA6B8E1CB9549B0077917F /* FlycutStore.m */; };
+		ED695924B4DA42BD8B923184 /* FlycutOperator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D0C119E1F147E250046FAA0 /* FlycutOperator.m */; };
+		0A12EF914BD4403A865D5DE2 /* AppControllerTestStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 60B2E03F082B4095B25A86F3 /* AppControllerTestStub.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -139,6 +146,11 @@
 		DBEB0C9A1442F2AE0080D24E /* NSWindow+ULIZoomEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+ULIZoomEffect.h"; sourceTree = "<group>"; };
 		DBEB0C9B1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+ULIZoomEffect.m"; sourceTree = "<group>"; };
 		F288EA293B7AAFCB4B4CF4C6 /* soarcut.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = soarcut.png; path = Resources/soarcut.png; sourceTree = "<group>"; };
+		9432EB02E4414F9BBA8A6DA3 /* FlycutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlycutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA52D4C7F01F4B6D84A31F6E /* FlycutClippingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlycutClippingTests.m; sourceTree = "<group>"; };
+		5AFD9F8AED59427CA9ACEC5B /* FlycutStoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlycutStoreTests.m; sourceTree = "<group>"; };
+		6A40599BFD784DCBA4A41E32 /* FlycutOperatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlycutOperatorTests.m; sourceTree = "<group>"; };
+		60B2E03F082B4095B25A86F3 /* AppControllerTestStub.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppControllerTestStub.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +162,13 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				77192A3823D6EADF00EDB9BC /* ServiceManagement.framework in Frameworks */,
 				AAFAC85F0A1BD9DD00DC6025 /* Carbon.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D324F9849447421F82BCBDD0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,6 +213,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				9432EB02E4414F9BBA8A6DA3 /* FlycutTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,6 +221,7 @@
 		29B97314FDCFA39411CA2CEA = {
 			isa = PBXGroup;
 			children = (
+				99F4B803CD05406C8850F722 /* FlycutTests */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -328,6 +349,17 @@
 			path = SGHotKeysLib;
 			sourceTree = "<group>";
 		};
+		99F4B803CD05406C8850F722 /* FlycutTests */ = {
+			isa = PBXGroup;
+			children = (
+				DA52D4C7F01F4B6D84A31F6E /* FlycutClippingTests.m */,
+				5AFD9F8AED59427CA9ACEC5B /* FlycutStoreTests.m */,
+				6A40599BFD784DCBA4A41E32 /* FlycutOperatorTests.m */,
+				60B2E03F082B4095B25A86F3 /* AppControllerTestStub.m */,
+			);
+			path = FlycutTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -378,6 +410,22 @@
 			productReference = 8D1107320486CEB800E47090 /* Flycut.app */;
 			productType = "com.apple.product-type.application";
 		};
+		83F633261338420F95BCC530 /* FlycutTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 708A21F9B305400D9685C675 /* Build configuration list for PBXNativeTarget "FlycutTests" */;
+			buildPhases = (
+				B336F0AFCA0B4508B2B913EC /* Sources */,
+				D324F9849447421F82BCBDD0 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlycutTests;
+			productName = FlycutTests;
+			productReference = 9432EB02E4414F9BBA8A6DA3 /* FlycutTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -387,6 +435,9 @@
 				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
+					83F633261338420F95BCC530 = {
+						CreatedOnToolsVersion = 27.2;
+					};
 					77192A2523D6EA7A00EDB9BC = {
 						CreatedOnToolsVersion = 11.3;
 						ProvisioningStyle = Automatic;
@@ -450,6 +501,7 @@
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Flycut */,
+				83F633261338420F95BCC530 /* FlycutTests */,
 			);
 		};
 /* End PBXProject section */
@@ -526,6 +578,20 @@
 				7761C8B3139BDF12000FB3AB /* SRValidator.m in Sources */,
 				773ABFB213E9AA1A00AE3969 /* NSWindow+TrueCenter.m in Sources */,
 				DBEB0C9D1442F2AE0080D24E /* NSWindow+ULIZoomEffect.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B336F0AFCA0B4508B2B913EC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3B4DB0848B44BD6B5BB6F5C /* FlycutClipping.m in Sources */,
+				6C746A49AACF444E80F386E7 /* FlycutStore.m in Sources */,
+				ED695924B4DA42BD8B923184 /* FlycutOperator.m in Sources */,
+				DA406542CE8F4124AD6E87E8 /* FlycutClippingTests.m in Sources */,
+				1EE4CA879B3140759A3F16A6 /* FlycutStoreTests.m in Sources */,
+				AD6959413E3D40969FEFA8D2 /* FlycutOperatorTests.m in Sources */,
+				0A12EF914BD4403A865D5DE2 /* AppControllerTestStub.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,6 +758,61 @@
 			};
 			name = Release;
 		};
+		46684725ACE440B891FE837F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_PREFIX_HEADER = Flycut_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					FLYCUT_MAC,
+				);
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(SRCROOT)/FlycutEngine",
+					"$(SRCROOT)/UI",
+					"$(SRCROOT)/ShortcutRecorder",
+					"$(SRCROOT)/SGHotKeysLib",
+					"$(SRCROOT)/UKPrefsPanel",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackfreem.soarcut.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1E81081C80B84AD9A95DDD42 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				GCC_PREFIX_HEADER = Flycut_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = FLYCUT_MAC;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					"$(SRCROOT)/FlycutEngine",
+					"$(SRCROOT)/UI",
+					"$(SRCROOT)/ShortcutRecorder",
+					"$(SRCROOT)/SGHotKeysLib",
+					"$(SRCROOT)/UKPrefsPanel",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackfreem.soarcut.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -709,6 +830,15 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		708A21F9B305400D9685C675 /* Build configuration list for PBXNativeTarget "FlycutTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				46684725ACE440B891FE837F /* Debug */,
+				1E81081C80B84AD9A95DDD42 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
