@@ -182,8 +182,8 @@
 	[self delegateBeginUpdates];
 
 	FlycutClipping *clipping = [jcList objectAtIndex:index];
+	[jcList removeObjectAtIndex:index];
 	[jcList insertObject:clipping atIndex:toIndex];
-	[jcList removeObjectAtIndex:index+1];
 	[self delegateMoveClippingAtIndex:index toIndex:toIndex];
 
 	[self delegateEndUpdates];
