@@ -1106,7 +1106,9 @@ static int FlycutClampPosition(int position, int count)
 
 -(void) saveEngine {
 	// saveEngine saves to NSUserDefaults.  If there have been no modifications, just skip this to avoid busy activity for any observers.
-	if ( !([clippingStore modifiedSinceLastSaveStore]
+	// Always save the history list as history, even while favorites are selected.
+	FlycutStore *historyStore = [self primaryStore];
+	if ( !([historyStore modifiedSinceLastSaveStore]
 		   || [favoritesStore modifiedSinceLastSaveStore]) )
 		return;
 
@@ -1123,7 +1125,7 @@ static int FlycutClampPosition(int position, int count)
 	[saveTarget performSelector:saveSelector withObject:saveDict];
 #pragma clang diagnostic pop
 
-    [self saveStore:clippingStore toKey:@"jcList" onDict:saveDict];
+    [self saveStore:historyStore toKey:@"jcList" onDict:saveDict];
     [self saveStore:favoritesStore toKey:@"favoritesList" onDict:saveDict];
 
     [[NSUserDefaults standardUserDefaults] setObject:saveDict forKey:@"store"];

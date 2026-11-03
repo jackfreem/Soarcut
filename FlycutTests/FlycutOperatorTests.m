@@ -880,6 +880,21 @@ static NSString *const kTestAppBundleURL = @"/Applications/TestApp.app";
 	XCTAssertTrue([op stackPositionIsInBounds]);
 }
 
+- (void)testSaveWhileFavoritesSelectedKeepsHistory
+{
+	// e.g. bezel "f", then Delete a favorite with "save after every change" on.
+	[[NSUserDefaults standardUserDefaults] setInteger:1 forKey:@"savePreference"];
+	FlycutOperator *op = [self operatorWithClippings:@[@"h1", @"h2", @"h3"]];
+	[op saveFromStackToFavorites]; // h3
+	[op switchToFavoritesStore];
+
+	[op saveEngine];
+
+	NSDictionary *store = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"store"];
+	XCTAssertEqualObjects([store[@"jcList"] valueForKey:@"Contents"], (@[@"h2", @"h1"]));
+	XCTAssertEqualObjects([store[@"favoritesList"] valueForKey:@"Contents"], (@[@"h3"]));
+}
+
 - (void)testSetRememberNumWithoutDelegateResizes
 {
 	FlycutOperator *op = [self operatorWithClippings:@[@"a", @"b", @"c"]];
