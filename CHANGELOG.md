@@ -1,9 +1,12 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-11-02)
 
 First release of Soarcut, a fork of [Flycut](https://github.com/TermiT/Flycut) 1.9.7
 continuing the Jumpcut → Flycut lineage.
+
+- Signed with a Developer ID and notarized by Apple: download the DMG, drag to
+  Applications and open, with no Xcode and no Gatekeeper warnings.
 
 - Fixed the bezel getting stuck on screen when a system prompt or another app takes
   focus while it's open. (TermiT/Flycut#201, #337)
