@@ -594,7 +594,8 @@
 
 -(bool)clearItemAtStackPosition
 {
-    if ([clippingStore jcListCount] == 0)
+    // The position can be stale (e.g. the list shrank since the bezel last used it).
+    if ( ![self stackPositionIsInBounds] )
         return NO;
 
 	inhibitAutosaveClippings = YES; // Avoid saving things that the user explicitly deletes.
@@ -607,20 +608,17 @@
 
 -(bool)setStackPositionTo:(int) newStackPosition
 {
-	if ( [clippingStore jcListCount] >= newStackPosition ) {
+	if ( newStackPosition >= 0 && newStackPosition < [clippingStore jcListCount] ) {
 		stackPosition = newStackPosition;
 		return YES;
 	}
 	return NO;
 }
 
-// Would probably be good to just prevent this scenario where it originates and
-// delete this check.
+// Clamps the position into the current list (0 when the list is empty), e.g. after it shrank.
 -(void)adjustStackPositionIfOutOfBounds
 {
-	if (stackPosition >= [clippingStore jcListCount] && stackPosition != 0) { // deleted last item
-		stackPosition = [clippingStore jcListCount] - 1;
-	}
+	stackPosition = MAX(0, MIN(stackPosition, [clippingStore jcListCount] - 1));
 }
 
 -(bool)stackPositionIsInBounds
@@ -1008,7 +1006,7 @@
 	if ( [clippingStore jcListCount] > stackPosition ) {
 		return YES;
 	} else {
-		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"wraparoundBezel"] ) {
+		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"wraparoundBezel"] && [clippingStore jcListCount] > 0 ) {
 			stackPosition = 0;
 			return YES;
 		} else {
@@ -1022,7 +1020,7 @@
 {
 	stackPosition--;
 	if ( stackPosition < 0 ) {
-		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"wraparoundBezel"] ) {
+		if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"wraparoundBezel"] && [clippingStore jcListCount] > 0 ) {
 			stackPosition = [clippingStore jcListCount] - 1;
 			return YES;
 		} else {

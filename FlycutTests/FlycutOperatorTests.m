@@ -494,12 +494,21 @@ static NSString *const kTestAppBundleURL = @"/Applications/TestApp.app";
 	XCTAssertEqualObjects([op getPasteFromStackPosition], @"a");
 }
 
+- (void)testOneLessRecentWithWraparoundOnEmptyListStaysInBounds
+{
+	// Bezel Down arrow with no clippings used to report success and show "1 of 0".
+	[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"wraparoundBezel"];
+	FlycutOperator *op = [self makeOperator];
+
+	XCTAssertFalse([op setStackPositionToOneLessRecent]);
+	XCTAssertEqual([op stackPosition], 0);
+}
+
 - (void)testOneMoreRecentWithWraparoundOnEmptyListStaysInBounds
 {
 	[[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"wraparoundBezel"];
 	FlycutOperator *op = [self makeOperator];
 
-	XCTExpectFailure(@"FlycutOperator.m:1026 wraps to jcListCount - 1, which is -1 on an empty list, and returns YES");
 	XCTAssertFalse([op setStackPositionToOneMoreRecent]);
 	XCTAssertEqual([op stackPosition], 0);
 }
@@ -558,10 +567,61 @@ static NSString *const kTestAppBundleURL = @"/Applications/TestApp.app";
 	// Bezel numeral keys: pressing "3" with two clippings asks for position 2.
 	FlycutOperator *op = [self operatorWithClippings:@[@"a", @"b"]];
 
-	XCTExpectFailure(@"FlycutOperator.m:610 uses >= so position == jcListCount is accepted; a following "
-					 @"clearItemAtStackPosition would then remove past the end of the list");
 	XCTAssertFalse([op setStackPositionTo:2]);
 	XCTAssertEqual([op stackPosition], 0);
+}
+
+- (void)testSetStackPositionToOnEmptyListIsRejected
+{
+	// Bezel numeral "1" with no clippings.
+	FlycutOperator *op = [self makeOperator];
+
+	XCTAssertFalse([op setStackPositionTo:0]);
+	XCTAssertEqual([op stackPosition], 0);
+}
+
+- (void)testDeleteFromStalePositionIsIgnored
+{
+	// Bezel left on the 5th clipping, then the history limit is lowered to 2 in Preferences.
+	FlycutOperator *op = [self operatorWithClippings:@[@"a", @"b", @"c", @"d", @"e"]];
+	[op setStackPositionTo:4];
+	[op setRememberNum:2 forPrimaryStore:YES];
+	XCTAssertFalse([op stackPositionIsInBounds]);
+
+	XCTAssertNoThrow(XCTAssertFalse([op clearItemAtStackPosition]));
+	XCTAssertEqualObjects([self contentsOf:op], (@[@"e", @"d"]));
+}
+
+- (void)testAdjustClampsStalePositionThenNavigationWorks
+{
+	FlycutOperator *op = [self operatorWithClippings:@[@"a", @"b", @"c", @"d", @"e"]];
+	[op setStackPositionTo:4];
+	[op setRememberNum:2 forPrimaryStore:YES];
+
+	[op adjustStackPositionIfOutOfBounds]; // what showBezel now does
+	XCTAssertEqual([op stackPosition], 1);
+	XCTAssertTrue([op setStackPositionToOneMoreRecent]);
+	XCTAssertEqual([op stackPosition], 0);
+}
+
+- (void)testSetStackPositionToRejectsNegativePosition
+{
+	FlycutOperator *op = [self operatorWithClippings:@[@"a", @"b"]];
+
+	XCTAssertFalse([op setStackPositionTo:-1]);
+	XCTAssertEqual([op stackPosition], 0);
+}
+
+- (void)testNumeralPastEndThenDeleteRemovesNewestWithoutThrowing
+{
+	// In the bezel: two clippings, press "3" (position 2), then Delete.
+	FlycutOperator *op = [self operatorWithClippings:@[@"a", @"b"]];
+
+	[op setStackPositionTo:2];
+	XCTAssertNoThrow([op clearItemAtStackPosition]);
+
+	// Position 2 was rejected, so Delete removed the clipping at position 0 (the newest).
+	XCTAssertEqualObjects([self contentsOf:op], (@[@"a"]));
 }
 
 - (void)testAdjustStackPositionIfOutOfBoundsClampsToLastItem
@@ -595,7 +655,6 @@ static NSString *const kTestAppBundleURL = @"/Applications/TestApp.app";
 
 	[op adjustStackPositionIfOutOfBounds];
 
-	XCTExpectFailure(@"FlycutOperator.m:622 sets stackPosition to jcListCount - 1, i.e. -1, when the list is empty");
 	XCTAssertEqual([op stackPosition], 0);
 }
 
