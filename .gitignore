@@ -21,3 +21,6 @@ xcshareddata
 *.mobileprovision
 *.provisionprofile
 AuthKey_*
+
+# Per-developer signing settings (see Config/Debug.xcconfig).
+Config/Local.xcconfig

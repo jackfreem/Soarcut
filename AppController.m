@@ -19,6 +19,7 @@
 #import "UKLoginItemRegistry.h"
 #import "NSWindow+TrueCenter.h"
 #import "NSWindow+ULIZoomEffect.h"
+#import "StarPrompt.h"
 #import <ApplicationServices/ApplicationServices.h>
 #import <CoreFoundation/CoreFoundation.h>
 #import <ServiceManagement/ServiceManagement.h>
@@ -287,6 +288,7 @@ static void pollPasteboardTimerFired(void *context)
     [self switchMenuIconTo: [[NSUserDefaults standardUserDefaults] integerForKey:@"menuIcon"]];
 	[statusItem setMenu:jcMenu];
     [jcMenu setDelegate:self];
+    [self addStarOnGitHubMenuItem];
     jcMenuBaseItemsCount = [[[[jcMenu itemArray] reverseObjectEnumerator] allObjects] count];
     [statusItem setEnabled:YES];
 
@@ -887,6 +889,42 @@ static void pollPasteboardTimerFired(void *context)
     }
 }
 
+// A permanent way to star, for people who never see the prompt or already closed it.
+- (void)addStarOnGitHubMenuItem
+{
+	NSInteger index = [jcMenu numberOfItems] - 1; // before Quit if About is missing
+	for ( NSInteger i = 0; i < [jcMenu numberOfItems]; i++ ) {
+		if ( [[jcMenu itemAtIndex:i] action] == @selector(activateAndOrderFrontStandardAboutPanel:) ) {
+			index = i + 1;
+			break;
+		}
+	}
+	NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"Star Soarcut on GitHub\u2026"
+												  action:@selector(starOnGitHub:)
+										   keyEquivalent:@""];
+	[item setTarget:self];
+	[jcMenu insertItem:item atIndex:MAX(index, 0)];
+	[item release];
+}
+
+-(IBAction)starOnGitHub:(id)sender
+{
+	[StarPrompt openRepository];
+}
+
+// Counts a clipping chosen from the bezel or menu toward the GitHub star prompt.
+// Like T3 Code counting only turns that start, a paste Soarcut sends for you only
+// counts when Accessibility lets it land. Pop Paste does not count.
+- (void)noteClippingChosenWithSoarcutPasting:(BOOL)soarcutPastes
+{
+	if ( soarcutPastes ) {
+		NSDictionary *options = @{(id) (kAXTrustedCheckOptionPrompt): @NO};
+		if ( !AXIsProcessTrustedWithOptions((CFDictionaryRef) options) )
+			return;
+	}
+	[StarPrompt recordPasteNearStatusItem:statusItem];
+}
+
 - (void)pasteFromStack
 {
 	NSString *content = [flycutOperator getPasteFromStackPosition];
@@ -894,6 +932,7 @@ static void pollPasteboardTimerFired(void *context)
 		[self addClipToPasteboard:content];
 		[self performSelector:@selector(hideApp) withObject:nil afterDelay:0.2];
 		[self performSelector:@selector(fakeCommandV) withObject:nil afterDelay:0.2];
+		[self noteClippingChosenWithSoarcutPasting:YES];
 	} else {
 		[self performSelector:@selector(hideApp) withObject:nil afterDelay:0.2];
 	}
@@ -906,6 +945,7 @@ static void pollPasteboardTimerFired(void *context)
 	if ( nil != content ) {
 		[self performSelector:@selector(hideApp) withObject:nil afterDelay:0.2];
 		[self performSelector:@selector(typeStringAsKeystrokes:) withObject:content afterDelay:0.2];
+		[self noteClippingChosenWithSoarcutPasting:YES];
 	} else {
 		[self performSelector:@selector(hideApp) withObject:nil afterDelay:0.2];
 	}
@@ -947,6 +987,11 @@ static void pollPasteboardTimerFired(void *context)
         [self addClipToPasteboard:content];
         [self updateMenu];
 	}
+}
+
+-(BOOL)menuSelectionPastes
+{
+	return [[NSUserDefaults standardUserDefaults] boolForKey:@"menuSelectionPastes"];
 }
 
 - (void)typeIndexAndUpdate:(int)position {
@@ -1661,16 +1706,18 @@ static void pollPasteboardTimerFired(void *context)
 	int index=(int)[[sender representedObject] integerValue];
 	[self pasteIndexAndUpdate:index];
 
-	if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"menuSelectionPastes"] ) {
+	if ( [self menuSelectionPastes] ) {
 		[self performSelector:@selector(hideApp) withObject:nil];
 		[self performSelector:@selector(fakeCommandV) withObject:nil afterDelay:0.2];
 	}
+	[self noteClippingChosenWithSoarcutPasting:[self menuSelectionPastes]];
 }
 
 -(IBAction)processMenuClippingTypingSelection:(id)sender
 {
 	int index=(int)[[sender representedObject] integerValue];
 	[self typeIndexAndUpdate:index];
+	[self noteClippingChosenWithSoarcutPasting:YES];
 }
 
 -(void) setPBBlockCount:(NSNumber *)newPBBlockCount

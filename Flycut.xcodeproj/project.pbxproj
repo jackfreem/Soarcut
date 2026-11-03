@@ -19,6 +19,8 @@
 		7761C888139BDE94000FB3AB /* UKLoginItemRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C884139BDE94000FB3AB /* UKLoginItemRegistry.m */; };
 		7761C890139BDEAF000FB3AB /* BezelWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C88A139BDEAF000FB3AB /* BezelWindow.h */; };
 		7761C891139BDEAF000FB3AB /* BezelWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C88B139BDEAF000FB3AB /* BezelWindow.m */; };
+		5C0A1E5B2F00000000000003 /* StarPrompt.h in Headers */ = {isa = PBXBuildFile; fileRef = 5C0A1E5B2F00000000000001 /* StarPrompt.h */; };
+		5C0A1E5B2F00000000000004 /* StarPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = 5C0A1E5B2F00000000000002 /* StarPrompt.m */; };
 		7761C892139BDEAF000FB3AB /* RoundRecBezierPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C88C139BDEAF000FB3AB /* RoundRecBezierPath.h */; };
 		7761C893139BDEAF000FB3AB /* RoundRecBezierPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C88D139BDEAF000FB3AB /* RoundRecBezierPath.m */; };
 		7761C894139BDEAF000FB3AB /* RoundRecTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C88E139BDEAF000FB3AB /* RoundRecTextField.h */; };
@@ -74,6 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5C0A1E5B2F00000000000005 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		0F9BBF55DAEFF5A02C12440A /* soarcut-black.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "soarcut-black.png"; path = "Resources/soarcut-black.png"; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -94,6 +97,8 @@
 		7761C884139BDE94000FB3AB /* UKLoginItemRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKLoginItemRegistry.m; sourceTree = "<group>"; };
 		7761C88A139BDEAF000FB3AB /* BezelWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BezelWindow.h; sourceTree = "<group>"; };
 		7761C88B139BDEAF000FB3AB /* BezelWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BezelWindow.m; sourceTree = "<group>"; };
+		5C0A1E5B2F00000000000001 /* StarPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StarPrompt.h; sourceTree = "<group>"; };
+		5C0A1E5B2F00000000000002 /* StarPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StarPrompt.m; sourceTree = "<group>"; };
 		7761C88C139BDEAF000FB3AB /* RoundRecBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundRecBezierPath.h; sourceTree = "<group>"; };
 		7761C88D139BDEAF000FB3AB /* RoundRecBezierPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundRecBezierPath.m; sourceTree = "<group>"; };
 		7761C88E139BDEAF000FB3AB /* RoundRecTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundRecTextField.h; sourceTree = "<group>"; };
@@ -164,6 +169,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C0A1E5B2F00000000000006 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				5C0A1E5B2F00000000000005 /* Debug.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,6 +223,7 @@
 		29B97314FDCFA39411CA2CEA = {
 			isa = PBXGroup;
 			children = (
+				5C0A1E5B2F00000000000006 /* Config */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -295,6 +309,8 @@
 			children = (
 				7761C88A139BDEAF000FB3AB /* BezelWindow.h */,
 				7761C88B139BDEAF000FB3AB /* BezelWindow.m */,
+				5C0A1E5B2F00000000000001 /* StarPrompt.h */,
+				5C0A1E5B2F00000000000002 /* StarPrompt.m */,
 				7761C88C139BDEAF000FB3AB /* RoundRecBezierPath.h */,
 				7761C88D139BDEAF000FB3AB /* RoundRecBezierPath.m */,
 				7761C88E139BDEAF000FB3AB /* RoundRecTextField.h */,
@@ -362,6 +378,7 @@
 				7761C886139BDE94000FB3AB /* LoginItemsAE.h in Headers */,
 				7761C887139BDE94000FB3AB /* UKLoginItemRegistry.h in Headers */,
 				7761C890139BDEAF000FB3AB /* BezelWindow.h in Headers */,
+				5C0A1E5B2F00000000000003 /* StarPrompt.h in Headers */,
 				7761C892139BDEAF000FB3AB /* RoundRecBezierPath.h in Headers */,
 				7761C894139BDEAF000FB3AB /* RoundRecTextField.h in Headers */,
 				7761C899139BDEC4000FB3AB /* UKPrefsPanel.h in Headers */,
@@ -537,6 +554,7 @@
 				7761C885139BDE94000FB3AB /* LoginItemsAE.c in Sources */,
 				7761C888139BDE94000FB3AB /* UKLoginItemRegistry.m in Sources */,
 				7761C891139BDEAF000FB3AB /* BezelWindow.m in Sources */,
+				5C0A1E5B2F00000000000004 /* StarPrompt.m in Sources */,
 				7761C893139BDEAF000FB3AB /* RoundRecBezierPath.m in Sources */,
 				7761C895139BDEAF000FB3AB /* RoundRecTextField.m in Sources */,
 				7761C89A139BDEC4000FB3AB /* UKPrefsPanel.m in Sources */,
@@ -569,6 +587,7 @@
 /* Begin XCBuildConfiguration section */
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C0A1E5B2F00000000000005 /* Debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = FlycutDeveloperID.entitlements;
@@ -576,7 +595,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(FRAMEWORK_SEARCH_PATHS)",
@@ -596,8 +614,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 0.1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jackfreem.soarcut;
-				PRODUCT_NAME = Soarcut;
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;

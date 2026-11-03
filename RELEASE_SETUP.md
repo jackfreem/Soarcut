@@ -67,3 +67,21 @@ gh secret set NOTARY_ISSUER_ID -R jackfreem/Soarcut --env release --body "xxxxxx
 
 Soarcut is not sandboxed and has no embedded helpers or frameworks, so only the
 app itself is signed (with `FlycutDeveloperID.entitlements`).
+
+## Local dev builds
+
+Debug builds are **Soarcut Dev** (`com.jackfreem.soarcut.dev`), separate from the
+release app's Accessibility permission, preferences and history.
+
+1. In Xcode, sign in under **Settings > Apple Accounts**.
+2. Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig` and set your Team
+   ID, so rebuilds keep one signature and Accessibility permission survives them.
+3. Quit the release Soarcut (both use Shift-Cmd-V), then build and run. Xcode 27+
+   can't target the project's macOS 10.13 minimum, hence the override:
+
+   ```
+   xcodebuild -project Flycut.xcodeproj -scheme Flycut -configuration Debug \
+     -derivedDataPath build/dev -allowProvisioningUpdates \
+     MACOSX_DEPLOYMENT_TARGET=12.0 build
+   open "build/dev/Build/Products/Debug/Soarcut Dev.app"
+   ```
