@@ -208,12 +208,8 @@ static int FlycutClampPosition(int position, int count)
 	// Set the value.
 	[store setRememberNum:newRemember];
 
-	// Keep the current and remembered positions inside lists that may have just shrunk.
-	stackPosition = FlycutClampPosition(stackPosition, [clippingStore jcListCount]);
-	if ( [self favoritesStoreIsSelected] )
-		stashedStackPosition = FlycutClampPosition(stashedStackPosition, [stashedStore jcListCount]);
-	else
-		favoritesStackPosition = FlycutClampPosition(favoritesStackPosition, [favoritesStore jcListCount]);
+	// The other list's saved position is clamped when switching to it.
+	[self adjustStackPositionIfOutOfBounds];
 
 	return newRemember;
 }
@@ -239,7 +235,8 @@ static int FlycutClampPosition(int position, int count)
     stashedStore = clippingStore;
     clippingStore = favoritesStore;
     stashedStackPosition = stackPosition;
-    stackPosition = favoritesStackPosition;
+    // The favorites may have shrunk since this position was saved.
+    stackPosition = FlycutClampPosition(favoritesStackPosition, [clippingStore jcListCount]);
 }
 
 - (bool)restoreStashedStore
@@ -249,7 +246,8 @@ static int FlycutClampPosition(int position, int count)
         clippingStore = stashedStore;
         stashedStore = NULL;
         favoritesStackPosition = stackPosition;
-        stackPosition = stashedStackPosition;
+        // The history may have shrunk since this position was saved.
+        stackPosition = FlycutClampPosition(stashedStackPosition, [clippingStore jcListCount]);
         return YES;
     }
     return NO;

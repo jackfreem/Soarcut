@@ -1334,12 +1334,15 @@ static void pollPasteboardTimerFired(void *context)
 {
 	isBezelPinned = NO;
 	[self hideBezel];
+	// Favorites are browsed from the bezel; once it closes, go back to History so new copies land there.
+	[self restoreStashedStoreAndUpdate];
 	[NSApp hide:self];
 }
 
 - (void) applicationWillResignActive:(NSApplication *)app; {
 	// This should be hidden anyway, but just in case it's not.
 	[self hideBezel];
+	[self restoreStashedStoreAndUpdate];
 }
 
 
