@@ -16,7 +16,6 @@
 #import "SGHotKey.h"
 #import "SGHotKeyCenter.h"
 #import "SRRecorderCell.h"
-#import "UKLoginItemRegistry.h"
 #import "NSWindow+TrueCenter.h"
 #import "NSWindow+ULIZoomEffect.h"
 #import <ApplicationServices/ApplicationServices.h>
@@ -319,30 +318,9 @@ static void pollPasteboardTimerFired(void *context)
     // The load-on-startup check can be really slow, so this will be dispatched out so our thread isn't blocked.
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(queue, ^{
-        // FIXME: Should ask Gennadii if the "#ifdef SANDBOXING" should be removed and replaced with "if ([AppController isAppSandboxed])"
-#ifdef SANDBOXING
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"bundleIdentifier == %@", kFlycutHelperId];
-        NSArray *helperApp = [[[NSWorkspace sharedWorkspace] runningApplications] filteredArrayUsingPredicate:predicate];
-        BOOL helperLaunched = ([helperApp count] != 0);
-        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:helperLaunched]
-                                                            forKey:@"loadOnStartup"];
-#else
-
-        BOOL isLoginItem;
-        if (@available(macOS 13.0, *)) {
-            isLoginItem = ( SMAppServiceStatusEnabled == [[SMAppService mainAppService] status] );
-        } else {
-            // This can take five seconds, perhaps more, so do it in the background instead of holding up opening of the preference panel.
-            isLoginItem = ( [UKLoginItemRegistry indexForLoginItemWithPath:[[NSBundle mainBundle] bundlePath]] >= 1 );
-        }
-        if ( isLoginItem ) {
-            [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:YES]
-                                                     forKey:@"loadOnStartup"];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:NO]
-                                                     forKey:@"loadOnStartup"];
-        }
-#endif
+        BOOL isLoginItem = ( SMAppServiceStatusEnabled == [[SMAppService mainAppService] status] );
+        [[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithBool:isLoginItem]
+                                                 forKey:@"loadOnStartup"];
     });
     [self registerOrDeregisterICloudSync];
 
@@ -843,32 +821,13 @@ static void pollPasteboardTimerFired(void *context)
 
 -(IBAction)toggleLoadOnStartup:(id)sender {
 	// Since the control in Interface Builder is bound to User Defaults and sends this action, this method is called after User Defaults already reflects the newly-selected state and merely conveys that value to the relevant mechanisms rather than acting to negate the User Defaults state.
+	NSError *error = nil;
 	if ( [[NSUserDefaults standardUserDefaults] boolForKey:@"loadOnStartup"] ) {
-        // FIXME: Should ask Gennadii if the "#ifdef SANDBOXING" should be removed and replaced with "if ([AppController isAppSandboxed])"
-#ifdef SANDBOXING
-        SMLoginItemSetEnabled((__bridge CFStringRef)kFlycutHelperId, YES);
-#else
-    if (@available(macOS 13.0, *)) {
-        NSError *error = nil;
-        if ( ![[SMAppService mainAppService] registerAndReturnError:&error] )
-            NSLog(@"Could not add login item: %@", error);
-    } else {
-        [UKLoginItemRegistry addLoginItemWithPath:[[NSBundle mainBundle] bundlePath] hideIt:NO];
-    }
-#endif
+		if ( ![[SMAppService mainAppService] registerAndReturnError:&error] )
+			NSLog(@"Could not add login item: %@", error);
 	} else {
-        // FIXME: Should ask Gennadii if the "#ifdef SANDBOXING" should be removed and replaced with "if ([AppController isAppSandboxed])"
-#ifdef SANDBOXING
-        SMLoginItemSetEnabled((__bridge CFStringRef)kFlycutHelperId, NO);
-#else
-		if (@available(macOS 13.0, *)) {
-			NSError *error = nil;
-			if ( ![[SMAppService mainAppService] unregisterAndReturnError:&error] )
-				NSLog(@"Could not remove login item: %@", error);
-		} else {
-			[UKLoginItemRegistry removeLoginItemWithPath:[[NSBundle mainBundle] bundlePath]];
-		}
-#endif
+		if ( ![[SMAppService mainAppService] unregisterAndReturnError:&error] )
+			NSLog(@"Could not remove login item: %@", error);
 	}
 }
 

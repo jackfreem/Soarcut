@@ -13,10 +13,6 @@
 		77192A3823D6EADF00EDB9BC /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77192A3723D6EADF00EDB9BC /* ServiceManagement.framework */; };
 		773ABFB113E9AA1A00AE3969 /* NSWindow+TrueCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 773ABFAF13E9AA1A00AE3969 /* NSWindow+TrueCenter.h */; };
 		773ABFB213E9AA1A00AE3969 /* NSWindow+TrueCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 773ABFB013E9AA1A00AE3969 /* NSWindow+TrueCenter.m */; };
-		7761C885139BDE94000FB3AB /* LoginItemsAE.c in Sources */ = {isa = PBXBuildFile; fileRef = 7761C881139BDE94000FB3AB /* LoginItemsAE.c */; };
-		7761C886139BDE94000FB3AB /* LoginItemsAE.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C882139BDE94000FB3AB /* LoginItemsAE.h */; };
-		7761C887139BDE94000FB3AB /* UKLoginItemRegistry.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C883139BDE94000FB3AB /* UKLoginItemRegistry.h */; };
-		7761C888139BDE94000FB3AB /* UKLoginItemRegistry.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C884139BDE94000FB3AB /* UKLoginItemRegistry.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		7761C890139BDEAF000FB3AB /* BezelWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C88A139BDEAF000FB3AB /* BezelWindow.h */; };
 		7761C891139BDEAF000FB3AB /* BezelWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 7761C88B139BDEAF000FB3AB /* BezelWindow.m */; };
 		7761C892139BDEAF000FB3AB /* RoundRecBezierPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 7761C88C139BDEAF000FB3AB /* RoundRecBezierPath.h */; };
@@ -88,10 +84,6 @@
 		77192A3723D6EADF00EDB9BC /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		773ABFAF13E9AA1A00AE3969 /* NSWindow+TrueCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSWindow+TrueCenter.h"; sourceTree = "<group>"; };
 		773ABFB013E9AA1A00AE3969 /* NSWindow+TrueCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+TrueCenter.m"; sourceTree = "<group>"; };
-		7761C881139BDE94000FB3AB /* LoginItemsAE.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LoginItemsAE.c; sourceTree = "<group>"; };
-		7761C882139BDE94000FB3AB /* LoginItemsAE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginItemsAE.h; sourceTree = "<group>"; };
-		7761C883139BDE94000FB3AB /* UKLoginItemRegistry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UKLoginItemRegistry.h; sourceTree = "<group>"; };
-		7761C884139BDE94000FB3AB /* UKLoginItemRegistry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UKLoginItemRegistry.m; sourceTree = "<group>"; };
 		7761C88A139BDEAF000FB3AB /* BezelWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BezelWindow.h; sourceTree = "<group>"; };
 		7761C88B139BDEAF000FB3AB /* BezelWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BezelWindow.m; sourceTree = "<group>"; };
 		7761C88C139BDEAF000FB3AB /* RoundRecBezierPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundRecBezierPath.h; sourceTree = "<group>"; };
@@ -174,7 +166,6 @@
 				7761C89B139BDF12000FB3AB /* ShortcutRecorder */,
 				7761C896139BDEC4000FB3AB /* UKPrefsPanel */,
 				7761C889139BDEAF000FB3AB /* UI */,
-				7761C880139BDE94000FB3AB /* LoginItem */,
 				7761C877139BDE7F000FB3AB /* FlycutEngine */,
 				77A4F3A4139BD72300F39666 /* SGHotKeysLib */,
 			);
@@ -279,17 +270,6 @@
 			path = JumpcutEngine;
 			sourceTree = "<group>";
 		};
-		7761C880139BDE94000FB3AB /* LoginItem */ = {
-			isa = PBXGroup;
-			children = (
-				7761C881139BDE94000FB3AB /* LoginItemsAE.c */,
-				7761C882139BDE94000FB3AB /* LoginItemsAE.h */,
-				7761C883139BDE94000FB3AB /* UKLoginItemRegistry.h */,
-				7761C884139BDE94000FB3AB /* UKLoginItemRegistry.m */,
-			);
-			path = LoginItem;
-			sourceTree = "<group>";
-		};
 		7761C889139BDEAF000FB3AB /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,8 +339,6 @@
 				77A4F3AF139BD72300F39666 /* SGHotKeyCenter.h in Headers */,
 				77A4F3B1139BD72300F39666 /* SGKeyCodeTranslator.h in Headers */,
 				77A4F3B3139BD72300F39666 /* SGKeyCombo.h in Headers */,
-				7761C886139BDE94000FB3AB /* LoginItemsAE.h in Headers */,
-				7761C887139BDE94000FB3AB /* UKLoginItemRegistry.h in Headers */,
 				7761C890139BDEAF000FB3AB /* BezelWindow.h in Headers */,
 				7761C892139BDEAF000FB3AB /* RoundRecBezierPath.h in Headers */,
 				7761C894139BDEAF000FB3AB /* RoundRecTextField.h in Headers */,
@@ -534,8 +512,6 @@
 				77A4F3B0139BD72300F39666 /* SGHotKeyCenter.m in Sources */,
 				77A4F3B2139BD72300F39666 /* SGKeyCodeTranslator.m in Sources */,
 				77A4F3B4139BD72300F39666 /* SGKeyCombo.m in Sources */,
-				7761C885139BDE94000FB3AB /* LoginItemsAE.c in Sources */,
-				7761C888139BDE94000FB3AB /* UKLoginItemRegistry.m in Sources */,
 				7761C891139BDEAF000FB3AB /* BezelWindow.m in Sources */,
 				7761C893139BDEAF000FB3AB /* RoundRecBezierPath.m in Sources */,
 				7761C895139BDEAF000FB3AB /* RoundRecTextField.m in Sources */,
@@ -595,7 +571,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Applications;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jackfreem.soarcut;
 				PRODUCT_NAME = Soarcut;
@@ -630,7 +606,7 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = /Applications;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jackfreem.soarcut;
 				PRODUCT_NAME = Soarcut;
