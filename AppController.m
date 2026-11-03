@@ -1313,6 +1313,8 @@ static void pollPasteboardTimerFired(void *context)
 
 - (void) showBezel
 {
+	// The list may have shrunk while the bezel was hidden (e.g. a lower history limit).
+	[flycutOperator adjustStackPositionIfOutOfBounds];
 	if ( [flycutOperator stackPositionIsInBounds] ) {
 		[self fillBezel];
 	}

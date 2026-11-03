@@ -3,6 +3,9 @@
 ## Unreleased
 
 - Requires macOS 13 Ventura or later.
+- Fixed the bezel showing positions past the end of the list (for example "3 of 2"
+  after pressing 3 with two clippings, or "1 of 0" when empty), and Delete raising an
+  error after the history limit was lowered while the bezel was on a later clipping.
 - Fixed several memory leaks (the bezel window, cancelled save-location
   panels, preference views and copies of the clipping list) by moving the
   app to automatic reference counting.
