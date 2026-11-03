@@ -135,12 +135,36 @@
 
 -(void) willShowPreferences
 {
-	issuedRememberResizeWarning = NO;
+	issuedPrimaryResizeWarning = NO;
+	issuedFavoritesResizeWarning = NO;
 }
 
+// The history list, whether or not favorites are currently selected.
+-(FlycutStore *)primaryStore
+{
+	return [self favoritesStoreIsSelected] ? stashedStore : clippingStore;
+}
+
+-(FlycutStore *)storeForPrimary:(BOOL)isPrimaryStore
+{
+	return isPrimaryStore ? [self primaryStore] : favoritesStore;
+}
+
+-(int)rememberNumForPrimaryStore:(BOOL)isPrimaryStore
+{
+	return [[self storeForPrimary:isPrimaryStore] rememberNum];
+}
+
+static int FlycutClampPosition(int position, int count)
+{
+	return MAX(0, MIN(position, count - 1));
+}
+
+// Resizes the history (isPrimaryStore) or favorites list, regardless of which one is selected.
 -(int) setRememberNum:(int)newRemember forPrimaryStore:(BOOL) isPrimaryStore
 {
-	int oldRemeber = [self rememberNum];
+	FlycutStore *store = [self storeForPrimary:isPrimaryStore];
+	int oldRemeber = [store rememberNum];
 
 	// Ensure that we don't remember zero or fewer clippings.
 	if ( newRemember <= 0 )
@@ -150,8 +174,8 @@
 			newRemember = 40;
 	}
 
-	if ( newRemember < [self jcListCount] &&
-		! issuedRememberResizeWarning &&
+	if ( newRemember < [store jcListCount] &&
+		! (isPrimaryStore ? issuedPrimaryResizeWarning : issuedFavoritesResizeWarning) &&
 		! [[NSUserDefaults standardUserDefaults] boolForKey:@"stifleRememberResizeWarning"]
 		) {
 
@@ -174,12 +198,22 @@
 													 forKey:@"stifleRememberResizeWarning"];
 		} else {
 			// Resize
-			issuedRememberResizeWarning = YES;
+			if ( isPrimaryStore )
+				issuedPrimaryResizeWarning = YES;
+			else
+				issuedFavoritesResizeWarning = YES;
 		}
 	}
 
 	// Set the value.
-	[clippingStore setRememberNum:newRemember];
+	[store setRememberNum:newRemember];
+
+	// Keep the current and remembered positions inside lists that may have just shrunk.
+	stackPosition = FlycutClampPosition(stackPosition, [clippingStore jcListCount]);
+	if ( [self favoritesStoreIsSelected] )
+		stashedStackPosition = FlycutClampPosition(stashedStackPosition, [stashedStore jcListCount]);
+	else
+		favoritesStackPosition = FlycutClampPosition(favoritesStackPosition, [favoritesStore jcListCount]);
 
 	return newRemember;
 }
@@ -199,6 +233,9 @@
 
 -(void)switchToFavoritesStore
 {
+    // Switching again would stash the favorites over the only reference to the history list.
+    if ( [self favoritesStoreIsSelected] )
+        return;
     stashedStore = clippingStore;
     clippingStore = favoritesStore;
     stashedStackPosition = stackPosition;

@@ -44,7 +44,8 @@
 	BOOL inhibitAutosaveClippings;
 
 	//Preferences
-	BOOL issuedRememberResizeWarning;
+	BOOL issuedPrimaryResizeWarning;   // "Resize" already confirmed for the history list this Preferences session
+	BOOL issuedFavoritesResizeWarning; // ...and for the favorites list
 }
 
 // Basic functionality
@@ -98,6 +99,7 @@
 // Clippings Store related
 -(int)jcListCount;
 -(int)rememberNum;
+-(int)rememberNumForPrimaryStore:(BOOL)isPrimaryStore;
 -(FlycutClipping*)clippingAtStackPosition;
 -(NSArray *) previousDisplayStrings:(int)howMany containing:(NSString*)search;
 -(NSArray *) previousIndexes:(int)howMany containing:(NSString*)search; // This method is in newest-first order.

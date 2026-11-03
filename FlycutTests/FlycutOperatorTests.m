@@ -800,6 +800,86 @@ static NSString *const kTestAppBundleURL = @"/Applications/TestApp.app";
 	XCTAssertEqual([op jcListCount], 1);
 }
 
+- (void)testHistoryLimitChangeWhileFavoritesSelectedResizesHistory
+{
+	// Bezel "f" then Esc leaves favorites selected; then the history limit is lowered.
+	FlycutOperator *op = [self operatorWithClippings:@[@"h1", @"h2", @"h3", @"h4"]];
+	[op saveFromStackToFavorites]; // h4
+	[op saveFromStackToFavorites]; // h3
+	[op switchToFavoritesStore];
+
+	XCTAssertEqual([op setRememberNum:1 forPrimaryStore:YES], 1);
+
+	XCTAssertEqualObjects([self contentsOf:op], (@[@"h3", @"h4"]), @"favorites untouched");
+	XCTAssertTrue([op restoreStashedStore]);
+	XCTAssertEqualObjects([self contentsOf:op], (@[@"h2"]), @"history trimmed to the new limit");
+}
+
+- (void)testFavoritesLimitChangeWhileHistorySelectedResizesFavorites
+{
+	FlycutOperator *op = [self operatorWithClippings:@[@"h1", @"h2", @"h3", @"h4"]];
+	[op saveFromStackToFavorites]; // h4
+	[op saveFromStackToFavorites]; // h3
+
+	XCTAssertEqual([op setRememberNum:1 forPrimaryStore:NO], 1);
+	XCTAssertEqual([op rememberNumForPrimaryStore:NO], 1);
+
+	XCTAssertFalse([op favoritesStoreIsSelected]);
+	XCTAssertEqualObjects([self contentsOf:op], (@[@"h2", @"h1"]), @"history untouched");
+	[op switchToFavoritesStore];
+	XCTAssertEqualObjects([self contentsOf:op], (@[@"h3"]));
+}
+
+- (void)testFavoritesLimitChangeWhileFavoritesSelectedKeepsHistoryReachable
+{
+	FlycutOperator *op = [self operatorWithClippings:@[@"h1", @"h2", @"h3"]];
+	[op saveFromStackToFavorites]; // h3
+	[op switchToFavoritesStore];
+
+	XCTAssertEqual([op setRememberNum:50 forPrimaryStore:NO], 50);
+	[op switchToFavoritesStore]; // a redundant switch must not lose the stashed history
+
+	XCTAssertTrue([op restoreStashedStore]);
+	XCTAssertFalse([op favoritesStoreIsSelected]);
+	XCTAssertEqualObjects([self contentsOf:op], (@[@"h2", @"h1"]));
+	[self add:@"new copy" to:op];
+	XCTAssertEqualObjects([self contentsOf:op], (@[@"new copy", @"h2", @"h1"]), @"new copies go to history");
+}
+
+- (void)testResizeWarningIsTrackedPerList
+{
+	FOTAlertDelegate *alerts = [[FOTAlertDelegate alloc] init];
+	alerts.answer = @"Resize";
+	FlycutOperator *op = [self operatorWithClippings:@[@"h1", @"h2", @"h3", @"h4", @"h5"]];
+	[op saveFromStackToFavorites];
+	[op saveFromStackToFavorites];
+	[op saveFromStackToFavorites];
+	op.delegate = alerts;
+	[op willShowPreferences];
+
+	[op setRememberNum:1 forPrimaryStore:YES];
+	[op setRememberNum:1 forPrimaryStore:NO];
+
+	XCTAssertEqual(alerts.alertCount, 2u, @"confirming one list's resize must not silence the other's warning");
+}
+
+- (void)testShrinkingFavoritesClampsSavedFavoritesPosition
+{
+	FlycutOperator *op = [self operatorWithClippings:@[@"h1", @"h2", @"h3", @"h4"]];
+	[op saveFromStackToFavorites];
+	[op saveFromStackToFavorites];
+	[op saveFromStackToFavorites];
+	[op switchToFavoritesStore];
+	[op setStackPositionToLastItem]; // favorites position 2
+	[op restoreStashedStore];
+
+	[op setRememberNum:1 forPrimaryStore:NO];
+
+	[op switchToFavoritesStore];
+	XCTAssertEqual([op stackPosition], 0);
+	XCTAssertTrue([op stackPositionIsInBounds]);
+}
+
 - (void)testSetRememberNumWithoutDelegateResizes
 {
 	FlycutOperator *op = [self operatorWithClippings:@[@"a", @"b", @"c"]];

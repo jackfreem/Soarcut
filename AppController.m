@@ -170,7 +170,6 @@ static void pollPasteboardTimerFired(void *context)
                          @"suppressAccessibilityAlert",
                         ];
 
-	menuQueue = dispatch_queue_create("com.Flycut.menuUpdateQueue", DISPATCH_QUEUE_SERIAL);
 	typingQueue = dispatch_queue_create("com.Flycut.keystrokeTypingQueue", DISPATCH_QUEUE_SERIAL);
 
 	return [super init];
@@ -522,28 +521,23 @@ static void pollPasteboardTimerFired(void *context)
 
 -(void) checkRememberNumPref:(int)newRemember forPrimaryStore:(BOOL) isPrimaryStore
 {
-	int oldRemember = [flycutOperator rememberNum];
-	// isPrimaryStore tells the operator which preference to restore if the user cancels the resize.
+	// The operator resizes the list named by isPrimaryStore even if the other one is selected.
+	int oldRemember = [flycutOperator rememberNumForPrimaryStore:isPrimaryStore];
 	int setRemember = [flycutOperator setRememberNum:newRemember forPrimaryStore:isPrimaryStore];
 
-	if ( isPrimaryStore )
+	if ( !isPrimaryStore )
+		return;
+	if ( setRemember == oldRemember )
 	{
-		if ( setRemember == oldRemember )
-		{
-			[self updateMenu];
-		}
-		else if ( setRemember < oldRemember )
-		{
-			// Trim down the number displayed in the menu if it is greater than the new
-			// number to remember.
-			if ( isPrimaryStore ) {
-				if ( setRemember < [[NSUserDefaults standardUserDefaults] integerForKey:@"displayNum"] ) {
-					[[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:setRemember]
-															 forKey:@"displayNum"];
-					[self updateMenu];
-				}
-			}
-		}
+		[self updateMenu];
+	}
+	else if ( setRemember < oldRemember &&
+			  setRemember < [[NSUserDefaults standardUserDefaults] integerForKey:@"displayNum"] )
+	{
+		// Trim down the number displayed in the menu to the new number to remember.
+		[[NSUserDefaults standardUserDefaults] setValue:[NSNumber numberWithInt:setRemember]
+												 forKey:@"displayNum"];
+		[self updateMenu];
 	}
 }
 
@@ -554,9 +548,7 @@ static void pollPasteboardTimerFired(void *context)
 
 -(void) checkFavoritesRememberNumPref:(int)newRemember
 {
-	[flycutOperator switchToFavoritesStore];
 	[self checkRememberNumPref:newRemember forPrimaryStore:NO];
-	[flycutOperator restoreStashedStore];
 }
 
 -(IBAction) setDisplayNumPref:(id)sender
